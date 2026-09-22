@@ -1,0 +1,967 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | MediCare Pharmacy</title>
+
+    <style>
+        :root {
+            --sidebar: #0d3b2e;
+            --sidebar-active: #155c48;
+
+            --primary: #15966b;
+            --primary-dark: #0f805b;
+
+            --background: #f5f8f7;
+            --card: #ffffff;
+
+            --text: #12352b;
+            --muted: #667d75;
+            --border: #dce6e2;
+
+            --input-bg: #ffffff;
+
+            --success: #218b5b;
+            --danger: #c03939;
+            --warning: #b7791f;
+            --progress: #15966b;
+
+            --topbar: #ffffff;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--background);
+            color: var(--text);
+
+            transition:
+                background .25s ease,
+                color .25s ease;
+        }
+
+
+        /* ================================
+           DARK MODE
+        ================================= */
+
+        body.dark-mode {
+            --sidebar: #09271f;
+            --sidebar-active: #104c3b;
+
+            --primary: #20a878;
+            --primary-dark: #179365;
+
+            --background: #0f1715;
+            --card: #17211e;
+
+            --text: #edf6f2;
+            --muted: #9aada6;
+            --border: #2b3c36;
+
+            --input-bg: #111a17;
+
+            --success: #4dc58a;
+            --danger: #ef7070;
+            --warning: #d8a348;
+            --progress: #20a878;
+
+            --topbar: #151e1b;
+        }
+
+
+        /* ================================
+           THEME TOGGLE
+        ================================= */
+
+        .theme-toggle {
+            position: fixed;
+
+            top: 20px;
+            right: 25px;
+
+            width: 44px;
+            height: 44px;
+
+            border-radius: 50%;
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 19px;
+
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: .2s;
+        }
+
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+        }
+
+
+        /* ================================
+           LAYOUT
+        ================================= */
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+        }
+
+
+        /* ================================
+           SIDEBAR
+        ================================= */
+
+        .sidebar {
+            width: 255px;
+
+            min-height: 100vh;
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            background: var(--sidebar);
+
+            padding: 28px 18px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                0 12px 25px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.09);
+
+            margin-bottom: 30px;
+        }
+
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 12px;
+
+            background: var(--primary);
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            font-weight: 700;
+        }
+
+
+        .brand-name strong {
+            display: block;
+
+            color: white;
+
+            font-size: 20px;
+
+            font-weight: 800;
+        }
+
+
+        .brand-name span {
+            display: block;
+
+            color: #8ba79d;
+
+            font-size: 8px;
+
+            letter-spacing: 2px;
+
+            margin-top: 3px;
+        }
+
+
+        .menu-title {
+            color: #76988e;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin:
+                0 14px 11px;
+        }
+
+
+        .menu {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+
+        .menu-link {
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                0 14px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: #92ada4;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: .2s;
+        }
+
+
+        .menu-link:hover {
+            color: white;
+
+            background:
+                rgba(255,255,255,.06);
+        }
+
+
+        .menu-link.active {
+            color: white;
+
+            background: var(--sidebar-active);
+
+            box-shadow:
+                inset 3px 0 0
+                var(--primary);
+        }
+
+
+        .menu-icon {
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 17px;
+        }
+
+
+        .sidebar-space {
+            flex: 1;
+        }
+
+
+        .logout {
+            text-decoration: none;
+
+            color: #92ada4;
+
+            padding: 12px;
+
+            font-size: 14px;
+        }
+
+
+        .logout:hover {
+            color: white;
+        }
+
+
+        /* ================================
+           MAIN
+        ================================= */
+
+        .main {
+            margin-left: 255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height: 100vh;
+
+            padding:
+                48px 54px;
+        }
+
+
+        .eyebrow {
+            font-size: 11px;
+
+            letter-spacing: 1.6px;
+
+            font-weight: 700;
+
+            color: var(--primary);
+
+            margin-bottom: 10px;
+        }
+
+
+        h1 {
+            margin: 0;
+
+            font-size: 32px;
+
+            color: var(--text);
+        }
+
+
+        .subtitle {
+            color: var(--muted);
+
+            margin:
+                10px 0 34px;
+
+            font-size: 14px;
+        }
+
+
+        /* ================================
+           ORDERS
+        ================================= */
+
+        .orders {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 14px;
+
+            max-width: 1250px;
+        }
+
+
+        .order {
+            background: var(--card);
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 12px;
+
+            padding:
+                22px 24px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr auto;
+
+            gap: 20px;
+
+            transition:
+                background .25s ease,
+                border-color .25s ease;
+        }
+
+
+        .medicine {
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: var(--text);
+        }
+
+
+        .category {
+            color: var(--muted);
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+
+        .details {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 24px;
+
+            margin-top: 18px;
+        }
+
+
+        .detail span {
+            display: block;
+
+            font-size: 10px;
+
+            color: var(--muted);
+
+            letter-spacing: .8px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 6px;
+        }
+
+
+        .detail strong {
+            font-size: 14px;
+
+            color: var(--text);
+        }
+
+
+        .right {
+            min-width: 150px;
+
+            text-align: right;
+        }
+
+
+        .total {
+            font-size: 20px;
+
+            font-weight: 800;
+
+            color: var(--primary);
+
+            margin-bottom: 12px;
+        }
+
+
+        /* ================================
+           ORDER STATUS
+        ================================= */
+
+        .status {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                7px 11px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        .status::before {
+            content: "";
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                currentColor;
+        }
+
+
+        .pending {
+            color: var(--warning);
+
+            background: #fff5df;
+        }
+
+
+        .in-progress {
+            color: var(--progress);
+
+            background: #e4f3f1;
+        }
+
+
+        .delivered {
+            color: var(--success);
+
+            background: #e8f5eb;
+        }
+
+
+        .rejected {
+            color: var(--danger);
+
+            background: #fcebec;
+        }
+
+
+        body.dark-mode .pending {
+            background: #3b301c;
+        }
+
+
+        body.dark-mode .in-progress {
+            background: #173b35;
+        }
+
+
+        body.dark-mode .delivered {
+            background: #19382b;
+        }
+
+
+        body.dark-mode .rejected {
+            background: #3b2225;
+        }
+
+
+        /* ================================
+           EMPTY
+        ================================= */
+
+        .empty {
+            background: var(--card);
+
+            border:
+                1px dashed
+                var(--border);
+
+            border-radius: 12px;
+
+            padding:
+                60px 20px;
+
+            text-align: center;
+
+            color: var(--muted);
+        }
+
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 800px) {
+
+            .layout {
+                display: block;
+            }
+
+
+            .sidebar {
+                width: 100%;
+
+                min-height: auto;
+
+                position: relative;
+
+                border-right: 0;
+
+                border-bottom:
+                    1px solid
+                    rgba(255,255,255,.08);
+            }
+
+
+            .brand {
+                margin-bottom: 24px;
+            }
+
+
+            .main {
+                margin-left: 0;
+
+                width: 100%;
+
+                padding:
+                    32px 20px;
+            }
+
+
+            .order {
+                grid-template-columns: 1fr;
+            }
+
+
+            .right {
+                text-align: left;
+            }
+
+
+            .theme-toggle {
+                top: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+<button
+    id="themeToggle"
+    class="theme-toggle"
+    type="button"
+    aria-label="Switch theme"
+    title="Switch to dark mode"
+>
+    ☾
+</button>
+
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ✚
+            </div>
+
+
+            <div class="brand-name">
+
+                <strong>
+                    MediCare
+                </strong>
+
+                <span>
+                    PHARMACY
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            PHARMACY
+        </div>
+
+
+        <nav class="menu">
+
+            <a
+                href="/user-dashboard/"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ▦
+                </span>
+
+                <span>
+                    Medicines
+                </span>
+
+            </a>
+
+
+            <a
+                href="/my-orders/"
+                class="menu-link active"
+            >
+
+                <span class="menu-icon">
+                    ▤
+                </span>
+
+                <span>
+                    My Orders
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-space"></div>
+
+
+        <a
+            href="/logout/"
+            class="logout"
+        >
+
+            <span>
+                ↪
+            </span>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <div class="eyebrow">
+            ORDER HISTORY
+        </div>
+
+
+        <h1>
+            My Orders
+        </h1>
+
+
+        <p class="subtitle">
+            Track your medicine orders and their current order status.
+        </p>
+
+
+        <section class="orders">
+
+            {% for order in orders %}
+
+            <article class="order">
+
+                <div>
+
+                    <div class="medicine">
+                        {{ order.medicine.name }}
+                    </div>
+
+
+                    <div class="category">
+                        {{ order.medicine.category }}
+                    </div>
+
+
+                    <div class="details">
+
+                        <div class="detail">
+
+                            <span>
+                                Count
+                            </span>
+
+                            <strong>
+                                {{ order.count }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Price
+                            </span>
+
+                            <strong>
+                                ₹{{ order.medicine.price }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <span>
+                                Ordered
+                            </span>
+
+                            <strong>
+                                {{ order.order_date|date:"d M Y, h:i A" }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="right">
+
+                    <div class="total">
+                        ₹{{ order.total_price }}
+                    </div>
+
+
+                    {% if order.status == "Pending" %}
+
+                        <span class="status pending">
+                            Pending
+                        </span>
+
+                    {% elif order.status == "In Progress" %}
+
+                        <span class="status in-progress">
+                            In Progress
+                        </span>
+
+                    {% elif order.status == "Delivered" %}
+
+                        <span class="status delivered">
+                            Delivered
+                        </span>
+
+                    {% elif order.status == "Rejected" %}
+
+                        <span class="status rejected">
+                            Rejected
+                        </span>
+
+                    {% else %}
+
+                        <span class="status pending">
+                            {{ order.status }}
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+
+            {% empty %}
+
+                <div class="empty">
+                    You have not placed any orders yet.
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    (function () {
+
+        const myOrdersThemeToggle =
+            document.getElementById("themeToggle");
+
+
+        if (!myOrdersThemeToggle) {
+            return;
+        }
+
+
+        function applyMyOrdersTheme(theme) {
+
+            document.body.classList.toggle(
+                "dark-mode",
+                theme === "dark"
+            );
+
+
+            myOrdersThemeToggle.textContent =
+                theme === "dark"
+                    ? "☀"
+                    : "☾";
+
+
+            myOrdersThemeToggle.title =
+                theme === "dark"
+                    ? "Switch to light mode"
+                    : "Switch to dark mode";
+
+        }
+
+
+        const myOrdersSavedTheme =
+            localStorage.getItem("medicare-theme")
+            || "light";
+
+
+        applyMyOrdersTheme(
+            myOrdersSavedTheme
+        );
+
+
+        myOrdersThemeToggle.addEventListener(
+            "click",
+            function () {
+
+                const nextMyOrdersTheme =
+                    document.body.classList.contains(
+                        "dark-mode"
+                    )
+                        ? "light"
+                        : "dark";
+
+
+                localStorage.setItem(
+                    "medicare-theme",
+                    nextMyOrdersTheme
+                );
+
+
+                applyMyOrdersTheme(
+                    nextMyOrdersTheme
+                );
+
+            }
+        );
+
+    })();
+
+</script>
+
+
+</body>
+</html>

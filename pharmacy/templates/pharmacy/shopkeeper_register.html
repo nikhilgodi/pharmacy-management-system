@@ -1,0 +1,2165 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="color-scheme"
+        content="light dark"
+    >
+
+    <title>MediCare | Shopkeeper Registration</title>
+
+
+    <style>
+
+        /* ==================================================
+           RESET
+        ================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background: #f6f7f5;
+
+            color: #1f2933;
+
+            transition:
+                background-color 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        /* ==================================================
+           LIGHT THEME VARIABLES
+        ================================================== */
+
+        :root {
+
+            --page-bg: #f6f7f5;
+
+            --panel-bg: #ffffff;
+
+            --brand-bg: #172033;
+
+            --text-main: #1f2933;
+
+            --text-heading: #172033;
+
+            --text-secondary: #667085;
+
+            --text-muted: #98a2b3;
+
+            --border: #d4d9df;
+
+            --border-light: #e1e5e9;
+
+            --input-bg: #ffffff;
+
+            --primary: #0f766e;
+
+            --primary-button: #159b70;
+
+            --primary-hover: #118761;
+
+            --icon-bg: #234451;
+
+            --icon-color: #53c1aa;
+
+            --success: #27844a;
+
+            --danger: #b83a3a;
+
+            --toggle-bg: #ffffff;
+
+            --toggle-border: #d4d9df;
+        }
+
+
+        /* ==================================================
+           DARK THEME VARIABLES
+        ================================================== */
+
+        body.dark-mode {
+
+            --page-bg: #10151d;
+
+            --panel-bg: #171e28;
+
+            --brand-bg: #0b1018;
+
+            --text-main: #e7ebef;
+
+            --text-heading: #f4f6f8;
+
+            --text-secondary: #a9b2bf;
+
+            --text-muted: #7f8a99;
+
+            --border: #303a47;
+
+            --border-light: #303a47;
+
+            --input-bg: #121923;
+
+            --primary: #38a69a;
+
+            --primary-button: #159b70;
+
+            --primary-hover: #19ad7e;
+
+            --icon-bg: #1e3d42;
+
+            --icon-color: #61d0bb;
+
+            --success: #55b878;
+
+            --danger: #ef7070;
+
+            --toggle-bg: #202936;
+
+            --toggle-border: #3b4655;
+        }
+
+
+        /* ==================================================
+           PAGE
+        ================================================== */
+
+        .page {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            background: var(--page-bg);
+
+            transition:
+                background-color 0.25s ease;
+        }
+
+
+        /* ==================================================
+           THEME TOGGLE
+        ================================================== */
+
+        .theme-toggle {
+
+            position: fixed;
+
+            top: 24px;
+
+            right: 28px;
+
+            z-index: 1000;
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 50%;
+
+            border: 1px solid var(--toggle-border);
+
+            background: var(--toggle-bg);
+
+            color: var(--text-main);
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            box-shadow:
+                0 5px 18px rgba(0, 0, 0, 0.08);
+
+            transition:
+                background-color 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.15s ease;
+        }
+
+
+        .theme-toggle:hover {
+
+            transform: translateY(-1px);
+        }
+
+
+        .theme-toggle:active {
+
+            transform: translateY(0);
+        }
+
+
+        .sun-icon {
+
+            display: inline;
+        }
+
+
+        .moon-icon {
+
+            display: none;
+        }
+
+
+        body.dark-mode .sun-icon {
+
+            display: none;
+        }
+
+
+        body.dark-mode .moon-icon {
+
+            display: inline;
+        }
+
+
+        /* ==================================================
+           LEFT BRAND PANEL
+        ================================================== */
+
+        .brand-panel {
+
+            width: 38%;
+
+            min-height: 100vh;
+
+            background: var(--brand-bg);
+
+            color: #ffffff;
+
+            padding: 55px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            transition:
+                background-color 0.25s ease;
+        }
+
+
+        .brand-top {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+        }
+
+
+        .brand-logo {
+
+            width: 46px;
+
+            height: 46px;
+
+            border-radius: 10px;
+
+            background: #0f766e;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+
+            font-weight: 700;
+        }
+
+
+        .brand-name {
+
+            font-size: 23px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.3px;
+        }
+
+
+        .brand-content {
+
+            max-width: 410px;
+        }
+
+
+        .brand-content h1 {
+
+            font-size: 42px;
+
+            line-height: 1.12;
+
+            letter-spacing: -1.3px;
+
+            margin-bottom: 20px;
+
+            font-weight: 750;
+        }
+
+
+        .brand-content h1 span {
+
+            color: #28a58d;
+        }
+
+
+        .brand-content p {
+
+            color: #c4cbd4;
+
+            font-size: 15px;
+
+            line-height: 1.7;
+
+            max-width: 380px;
+        }
+
+
+        .brand-features {
+
+            margin-top: 34px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 17px;
+        }
+
+
+        .brand-feature {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #d7dce2;
+
+            font-size: 14px;
+        }
+
+
+        .feature-icon {
+
+            width: 27px;
+
+            height: 27px;
+
+            border-radius: 50%;
+
+            background: var(--icon-bg);
+
+            color: var(--icon-color);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .brand-footer {
+
+            color: #8f99a7;
+
+            font-size: 12px;
+        }
+
+
+        /* ==================================================
+           RIGHT REGISTRATION AREA
+        ================================================== */
+
+        .register-area {
+
+            width: 62%;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 45px 70px;
+
+            background: var(--page-bg);
+
+            transition:
+                background-color 0.25s ease;
+        }
+
+
+        .register-container {
+
+            width: 100%;
+
+            max-width: 760px;
+        }
+
+
+        .eyebrow {
+
+            color: var(--primary);
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .register-title {
+
+            color: var(--text-heading);
+
+            font-size: 39px;
+
+            line-height: 1.15;
+
+            letter-spacing: -1px;
+
+            font-weight: 750;
+
+            margin-bottom: 11px;
+
+            transition:
+                color 0.25s ease;
+        }
+
+
+        .register-subtitle {
+
+            color: var(--text-secondary);
+
+            font-size: 15px;
+
+            margin-bottom: 30px;
+
+            line-height: 1.6;
+
+            transition:
+                color 0.25s ease;
+        }
+
+
+        /* ==================================================
+           FIELDS GRID
+        ================================================== */
+
+        .fields-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px 20px;
+        }
+
+
+        .field-group {
+
+            width: 100%;
+        }
+
+
+        .field-group.full-width {
+
+            grid-column: 1 / -1;
+        }
+
+
+        .field-label {
+
+            display: block;
+
+            color: var(--text-heading);
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+
+            transition:
+                color 0.25s ease;
+        }
+
+
+        /* ==================================================
+           INPUT WRAPPER
+        ================================================== */
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 18px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: var(--text-muted);
+
+            font-size: 17px;
+
+            pointer-events: none;
+
+            z-index: 2;
+        }
+
+
+        /* ==================================================
+           INPUT
+        ================================================== */
+
+        .form-control {
+
+            width: 100%;
+
+            height: 62px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 11px;
+
+            background: var(--input-bg);
+
+            color: var(--text-main);
+
+            font-size: 15px;
+
+            padding: 0 19px 0 52px;
+
+            outline: none;
+
+            transition:
+                background-color 0.25s ease,
+                color 0.25s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .form-control::placeholder {
+
+            color: var(--text-muted);
+        }
+
+
+        .form-control:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px rgba(15, 118, 110, 0.11);
+        }
+
+
+        /* ==================================================
+           PASSWORD
+        ================================================== */
+
+        .password-input {
+
+            padding-right: 60px;
+
+            /*
+                The field remains type="text" to reduce
+                Chrome password-manager interference.
+
+                CSS masks the typed characters.
+            */
+
+            -webkit-text-security: disc;
+        }
+
+
+        .password-input.show-password {
+
+            -webkit-text-security: none;
+        }
+
+
+        .password-toggle {
+
+            position: absolute;
+
+            right: 12px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 38px;
+
+            height: 38px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: transparent;
+
+            color: var(--text-muted);
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition:
+                background-color 0.2s ease,
+                color 0.2s ease;
+        }
+
+
+        .password-toggle:hover {
+
+            background: rgba(15, 118, 110, 0.10);
+
+            color: var(--primary);
+        }
+
+
+        /* ==================================================
+           REGISTER BUTTON
+        ================================================== */
+
+        .register-button {
+
+            width: 100%;
+
+            height: 63px;
+
+            margin-top: 27px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: var(--primary-button);
+
+            color: #ffffff;
+
+            font-size: 15px;
+
+            font-weight: 750;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+
+            transition:
+                background-color 0.2s ease,
+                transform 0.15s ease;
+        }
+
+
+        .register-button:hover {
+
+            background: var(--primary-hover);
+        }
+
+
+        .register-button:active {
+
+            transform: translateY(1px);
+        }
+
+
+        .register-button:disabled {
+
+            opacity: 0.65;
+
+            cursor: not-allowed;
+        }
+
+
+        .button-icon {
+
+            font-size: 16px;
+        }
+
+
+        /* ==================================================
+           MESSAGE
+        ================================================== */
+
+        .message {
+
+            min-height: 23px;
+
+            margin-top: 14px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .message.error {
+
+            color: var(--danger);
+        }
+
+
+        .message.success {
+
+            color: var(--success);
+        }
+
+
+        /* ==================================================
+           LOGIN SECTION
+        ================================================== */
+
+        .login-section {
+
+            margin-top: 21px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid var(--border-light);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.25s ease;
+        }
+
+
+        .login-text {
+
+            color: var(--text-secondary);
+        }
+
+
+        .login-link {
+
+            color: var(--primary);
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        .login-link:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* ==================================================
+           RESPONSIVE
+        ================================================== */
+
+        @media (max-width: 1000px) {
+
+            .brand-panel {
+
+                width: 38%;
+
+                padding: 40px 30px;
+            }
+
+
+            .register-area {
+
+                width: 62%;
+
+                padding: 40px;
+            }
+
+
+            .brand-content h1 {
+
+                font-size: 35px;
+            }
+
+
+            .register-title {
+
+                font-size: 34px;
+            }
+        }
+
+
+        @media (max-width: 760px) {
+
+            .page {
+
+                display: block;
+            }
+
+
+            .theme-toggle {
+
+                top: 18px;
+
+                right: 18px;
+
+                width: 44px;
+
+                height: 44px;
+            }
+
+
+            .brand-panel {
+
+                width: 100%;
+
+                min-height: auto;
+
+                padding: 30px;
+            }
+
+
+            .brand-content {
+
+                margin-top: 45px;
+
+                margin-bottom: 35px;
+            }
+
+
+            .brand-content h1 {
+
+                font-size: 34px;
+            }
+
+
+            .brand-features {
+
+                display: none;
+            }
+
+
+            .register-area {
+
+                width: 100%;
+
+                min-height: auto;
+
+                padding: 40px 25px;
+            }
+
+
+            .fields-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .field-group.full-width {
+
+                grid-column: auto;
+            }
+
+
+            .register-title {
+
+                font-size: 32px;
+            }
+        }
+
+
+        @media (max-width: 480px) {
+
+            .brand-panel {
+
+                padding: 25px;
+            }
+
+
+            .register-area {
+
+                padding: 35px 20px;
+            }
+
+
+            .form-control {
+
+                height: 60px;
+            }
+
+
+            .register-button {
+
+                height: 60px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LIGHT / DARK MODE TOGGLE
+====================================================== -->
+
+<button
+    type="button"
+    id="themeToggle"
+    class="theme-toggle"
+    aria-label="Switch to dark mode"
+    title="Switch to dark mode"
+>
+
+    <span
+        id="sunIcon"
+        class="sun-icon"
+    >
+        ☀
+    </span>
+
+
+    <span
+        id="moonIcon"
+        class="moon-icon"
+    >
+        ☾
+    </span>
+
+</button>
+
+
+
+<div class="page">
+
+
+    <!-- =================================================
+         LEFT BRAND PANEL
+    ================================================== -->
+
+    <aside class="brand-panel">
+
+
+        <div class="brand-top">
+
+            <div class="brand-logo">
+                ✚
+            </div>
+
+
+            <div class="brand-name">
+                MediCare
+            </div>
+
+        </div>
+
+
+
+        <div class="brand-content">
+
+
+            <h1>
+
+                Manage your
+                <span>pharmacy</span>
+                with confidence.
+
+            </h1>
+
+
+            <p>
+
+                Create your account to access the MediCare
+                pharmacy management system and manage
+                medicines, inventory and orders efficiently.
+
+            </p>
+
+
+
+            <div class="brand-features">
+
+
+                <div class="brand-feature">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <span>
+                        Manage medicines and stock
+                    </span>
+
+                </div>
+
+
+
+                <div class="brand-feature">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <span>
+                        Track customer orders
+                    </span>
+
+                </div>
+
+
+
+                <div class="brand-feature">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <span>
+                        Simple and secure access
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="brand-footer">
+
+            © 2026 MediCare Pharmacy Management System
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =================================================
+         REGISTRATION AREA
+    ================================================== -->
+
+    <main class="register-area">
+
+
+        <div class="register-container">
+
+
+            <div class="eyebrow">
+                CREATE ACCOUNT
+            </div>
+
+
+            <h2 class="register-title">
+                Shopkeeper Registration
+            </h2>
+
+
+            <p class="register-subtitle">
+
+                Enter your details to create your MediCare
+                account.
+
+            </p>
+
+
+
+            <!-- =========================================
+                 REGISTRATION FIELDS
+            ========================================== -->
+
+            <div class="fields-grid">
+
+
+                <!-- FULL NAME -->
+
+                <div class="field-group full-width">
+
+
+                    <label
+                        class="field-label"
+                        for="fullName"
+                    >
+                        Full Name
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <span class="input-icon">
+                            ♙
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            class="form-control"
+                            placeholder="Enter your full name"
+
+                            autocomplete="off"
+
+                            autocorrect="off"
+
+                            autocapitalize="words"
+
+                            spellcheck="false"
+                        >
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- USERNAME -->
+
+                <div class="field-group">
+
+
+                    <label
+                        class="field-label"
+                        for="username"
+                    >
+                        Username
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <span class="input-icon">
+                            ▣
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="form-control"
+                            placeholder="Choose a username"
+
+                            autocomplete="off"
+
+                            autocorrect="off"
+
+                            autocapitalize="none"
+
+                            spellcheck="false"
+                        >
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="field-group">
+
+
+                    <label
+                        class="field-label"
+                        for="email"
+                    >
+                        Email Address
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-control"
+                            placeholder="Enter your email"
+
+                            autocomplete="off"
+
+                            autocorrect="off"
+
+                            autocapitalize="none"
+
+                            spellcheck="false"
+                        >
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="field-group">
+
+
+                    <label
+                        class="field-label"
+                        for="password"
+                    >
+                        Password
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <span class="input-icon">
+                            ♧
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="password"
+                            name="password"
+                            class="form-control password-input"
+                            placeholder="Create password"
+
+                            autocomplete="off"
+
+                            autocorrect="off"
+
+                            autocapitalize="none"
+
+                            spellcheck="false"
+                        >
+
+
+                        <button
+                            type="button"
+                            id="passwordToggle"
+                            class="password-toggle"
+                            aria-label="Show password"
+                        >
+                            ◉
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="field-group">
+
+
+                    <label
+                        class="field-label"
+                        for="confirmPassword"
+                    >
+                        Confirm Password
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+
+                        <span class="input-icon">
+                            ♧
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            class="form-control password-input"
+                            placeholder="Confirm password"
+
+                            autocomplete="off"
+
+                            autocorrect="off"
+
+                            autocapitalize="none"
+
+                            spellcheck="false"
+                        >
+
+
+                        <button
+                            type="button"
+                            id="confirmPasswordToggle"
+                            class="password-toggle"
+                            aria-label="Show password"
+                        >
+                            ◉
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =========================================
+                 REGISTER BUTTON
+            ========================================== -->
+
+            <button
+                type="button"
+                id="registerButton"
+                class="register-button"
+            >
+
+                <span class="button-icon">
+                    ♟
+                </span>
+
+
+                <span id="registerButtonText">
+                    Create Shopkeeper Account
+                </span>
+
+            </button>
+
+
+
+            <!-- =========================================
+                 MESSAGE
+            ========================================== -->
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+
+            <!-- =========================================
+                 LOGIN LINK
+            ========================================== -->
+
+            <div class="login-section">
+
+
+                <span class="login-text">
+                    Already have an account?
+                </span>
+
+
+                <a
+                    href="/login/"
+                    class="login-link"
+                >
+                    Sign in
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+    /* ==================================================
+       THEME TOGGLE
+    ================================================== */
+
+    const themeToggle =
+        document.getElementById(
+            "themeToggle"
+        );
+
+
+    function applyTheme(theme) {
+
+        if (theme === "dark") {
+
+            document.body.classList.add(
+                "dark-mode"
+            );
+
+
+            themeToggle.setAttribute(
+                "aria-label",
+                "Switch to light mode"
+            );
+
+
+            themeToggle.setAttribute(
+                "title",
+                "Switch to light mode"
+            );
+
+        } else {
+
+            document.body.classList.remove(
+                "dark-mode"
+            );
+
+
+            themeToggle.setAttribute(
+                "aria-label",
+                "Switch to dark mode"
+            );
+
+
+            themeToggle.setAttribute(
+                "title",
+                "Switch to dark mode"
+            );
+        }
+
+    }
+
+
+
+    /*
+    ------------------------------------------
+    LOAD SAVED THEME
+    ------------------------------------------
+    */
+
+    const savedTheme =
+        localStorage.getItem(
+            "medicare-theme"
+        );
+
+
+    if (savedTheme === "dark") {
+
+        applyTheme("dark");
+
+    } else {
+
+        applyTheme("light");
+
+    }
+
+
+
+    /*
+    ------------------------------------------
+    CHANGE THEME
+    ------------------------------------------
+    */
+
+    themeToggle.addEventListener(
+        "click",
+        function () {
+
+            const isDark =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
+
+
+            if (isDark) {
+
+                applyTheme("light");
+
+
+                localStorage.setItem(
+                    "medicare-theme",
+                    "light"
+                );
+
+            } else {
+
+                applyTheme("dark");
+
+
+                localStorage.setItem(
+                    "medicare-theme",
+                    "dark"
+                );
+
+            }
+
+        }
+    );
+
+
+
+    /* ==================================================
+       PASSWORD SHOW / HIDE
+    ================================================== */
+
+    const password =
+        document.getElementById(
+            "password"
+        );
+
+
+    const passwordToggle =
+        document.getElementById(
+            "passwordToggle"
+        );
+
+
+    passwordToggle.addEventListener(
+        "click",
+        function () {
+
+            if (
+                password.classList.contains(
+                    "show-password"
+                )
+            ) {
+
+                password.classList.remove(
+                    "show-password"
+                );
+
+
+                passwordToggle.textContent =
+                    "◉";
+
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+            } else {
+
+                password.classList.add(
+                    "show-password"
+                );
+
+
+                passwordToggle.textContent =
+                    "◎";
+
+
+                passwordToggle.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            }
+
+        }
+    );
+
+
+
+    /* ==================================================
+       CONFIRM PASSWORD SHOW / HIDE
+    ================================================== */
+
+    const confirmPassword =
+        document.getElementById(
+            "confirmPassword"
+        );
+
+
+    const confirmPasswordToggle =
+        document.getElementById(
+            "confirmPasswordToggle"
+        );
+
+
+    confirmPasswordToggle.addEventListener(
+        "click",
+        function () {
+
+            if (
+                confirmPassword.classList.contains(
+                    "show-password"
+                )
+            ) {
+
+                confirmPassword.classList.remove(
+                    "show-password"
+                );
+
+
+                confirmPasswordToggle.textContent =
+                    "◉";
+
+
+                confirmPasswordToggle.setAttribute(
+                    "aria-label",
+                    "Show password"
+                );
+
+            } else {
+
+                confirmPassword.classList.add(
+                    "show-password"
+                );
+
+
+                confirmPasswordToggle.textContent =
+                    "◎";
+
+
+                confirmPasswordToggle.setAttribute(
+                    "aria-label",
+                    "Hide password"
+                );
+
+            }
+
+        }
+    );
+
+
+
+    /* ==================================================
+       CSRF COOKIE
+    ================================================== */
+
+    function getCookie(name) {
+
+        let cookieValue = null;
+
+
+        if (
+            document.cookie &&
+            document.cookie !== ""
+        ) {
+
+            const cookies =
+                document.cookie.split(";");
+
+
+            for (
+                let cookie of cookies
+            ) {
+
+                cookie = cookie.trim();
+
+
+                if (
+                    cookie.startsWith(
+                        name + "="
+                    )
+                ) {
+
+                    cookieValue =
+                        decodeURIComponent(
+                            cookie.substring(
+                                name.length + 1
+                            )
+                        );
+
+
+                    break;
+                }
+
+            }
+
+        }
+
+
+        return cookieValue;
+
+    }
+
+
+
+    /* ==================================================
+       REGISTRATION
+    ================================================== */
+
+    const registerButton =
+        document.getElementById(
+            "registerButton"
+        );
+
+
+    registerButton.addEventListener(
+        "click",
+        function () {
+
+
+            const fullName =
+                document
+                    .getElementById(
+                        "fullName"
+                    )
+                    .value
+                    .trim();
+
+
+            const username =
+                document
+                    .getElementById(
+                        "username"
+                    )
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById(
+                        "email"
+                    )
+                    .value
+                    .trim();
+
+
+            const passwordValue =
+                document
+                    .getElementById(
+                        "password"
+                    )
+                    .value;
+
+
+            const confirmPasswordValue =
+                document
+                    .getElementById(
+                        "confirmPassword"
+                    )
+                    .value;
+
+
+            const message =
+                document.getElementById(
+                    "message"
+                );
+
+
+            const buttonText =
+                document.getElementById(
+                    "registerButtonText"
+                );
+
+
+            /*
+            ------------------------------------------
+            CLEAR MESSAGE
+            ------------------------------------------
+            */
+
+            message.textContent = "";
+
+            message.className =
+                "message";
+
+
+            /*
+            ------------------------------------------
+            VALIDATION
+            ------------------------------------------
+            */
+
+            if (fullName === "") {
+
+                message.textContent =
+                    "Please enter your full name.";
+
+                message.classList.add(
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (username === "") {
+
+                message.textContent =
+                    "Please enter a username.";
+
+                message.classList.add(
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (email === "") {
+
+                message.textContent =
+                    "Please enter your email address.";
+
+                message.classList.add(
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (passwordValue === "") {
+
+                message.textContent =
+                    "Please create a password.";
+
+                message.classList.add(
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                passwordValue.length < 6
+            ) {
+
+                message.textContent =
+                    "Password must be at least 6 characters.";
+
+                message.classList.add(
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                confirmPasswordValue === ""
+            ) {
+
+                message.textContent =
+                    "Please confirm your password.";
+
+                message.classList.add(
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                passwordValue !==
+                confirmPasswordValue
+            ) {
+
+                message.textContent =
+                    "Passwords do not match.";
+
+                message.classList.add(
+                    "error"
+                );
+
+                return;
+            }
+
+
+            /*
+            ------------------------------------------
+            DISABLE BUTTON
+            ------------------------------------------
+            */
+
+            registerButton.disabled =
+                true;
+
+
+            buttonText.textContent =
+                "Creating Account...";
+
+
+            /*
+            ------------------------------------------
+            SEND REQUEST TO DJANGO
+            ------------------------------------------
+            */
+
+            fetch(
+                "/shopkeeper-register-user/",
+                {
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/x-www-form-urlencoded",
+
+                        "X-CSRFToken":
+                            getCookie(
+                                "csrftoken"
+                            )
+
+                    },
+
+                    body:
+                        new URLSearchParams({
+
+                            fullName:
+                                fullName,
+
+                            username:
+                                username,
+
+                            email:
+                                email,
+
+                            password:
+                                passwordValue,
+
+                            confirmPassword:
+                                confirmPasswordValue
+
+                        })
+
+                }
+            )
+
+
+            /*
+            ------------------------------------------
+            SERVER RESPONSE
+            ------------------------------------------
+            */
+
+            .then(
+                function (response) {
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Server returned " +
+                            response.status
+                        );
+
+                    }
+
+
+                    return response.json();
+
+                }
+            )
+
+
+            /*
+            ------------------------------------------
+            RESULT
+            ------------------------------------------
+            */
+
+            .then(
+                function (data) {
+
+
+                    if (data.success) {
+
+
+                        message.textContent =
+                            data.message ||
+                            "Account created successfully!";
+
+
+                        message.classList.add(
+                            "success"
+                        );
+
+
+                        buttonText.textContent =
+                            "Account Created";
+
+
+                        /*
+                        Go to Login
+                        */
+
+                        setTimeout(
+                            function () {
+
+                                window.location.href =
+                                    "/login/";
+
+                            },
+                            1200
+                        );
+
+
+                    } else {
+
+
+                        message.textContent =
+                            data.message ||
+                            "Registration failed.";
+
+
+                        message.classList.add(
+                            "error"
+                        );
+
+
+                        registerButton.disabled =
+                            false;
+
+
+                        buttonText.textContent =
+                            "Create Shopkeeper Account";
+
+                    }
+
+                }
+            )
+
+
+            /*
+            ------------------------------------------
+            ERROR
+            ------------------------------------------
+            */
+
+            .catch(
+                function (error) {
+
+
+                    console.error(
+                        "Registration error:",
+                        error
+                    );
+
+
+                    message.textContent =
+                        "Unable to connect to the server. Please try again.";
+
+
+                    message.classList.add(
+                        "error"
+                    );
+
+
+                    registerButton.disabled =
+                        false;
+
+
+                    buttonText.textContent =
+                        "Create Shopkeeper Account";
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

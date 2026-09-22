@@ -1,0 +1,2263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediCare | Pharmacy Management System</title>
+
+    <style>
+        /* =========================================================
+           MEDICARE LOGIN
+           Advanced UI - CSS only, no external images
+        ========================================================= */
+
+        :root {
+            --bg: #0b1118;
+            --bg-soft: #101820;
+
+            --panel: #111a23;
+            --panel-2: #151f29;
+
+            --border: #273541;
+            --border-soft: #1d2a35;
+
+            --text: #f4f7f8;
+            --muted: #91a0ad;
+            --muted-2: #667583;
+
+            --primary: #16a879;
+            --primary-hover: #12966c;
+            --primary-soft: #49c79e;
+
+            --success: #5bd29e;
+            --danger: #ff8585;
+
+            --white: #ffffff;
+
+            --shadow:
+                0 24px 70px rgba(0, 0, 0, .32);
+        }
+
+
+        body.light-mode {
+            --bg: #f3f6f5;
+            --bg-soft: #eaf0ee;
+
+            --panel: #ffffff;
+            --panel-2: #f8faf9;
+
+            --border: #d8e2df;
+            --border-soft: #e5ece9;
+
+            --text: #17252d;
+            --muted: #667780;
+            --muted-2: #8b9aa1;
+
+            --primary: #0f8f6d;
+            --primary-hover: #0b7c5e;
+            --primary-soft: #1aa982;
+
+            --shadow:
+                0 24px 70px rgba(23, 37, 45, .12);
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                ui-sans-serif,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            overflow-x: hidden;
+
+            transition:
+                background .25s ease,
+                color .25s ease;
+        }
+
+
+        button,
+        input {
+            font: inherit;
+        }
+
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* =========================================================
+           MAIN LAYOUT
+        ========================================================= */
+
+        .login-page {
+            min-height: 100vh;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(430px, 43%)
+                minmax(560px, 57%);
+
+            background: var(--bg);
+        }
+
+
+        /* =========================================================
+           LEFT PANEL
+        ========================================================= */
+
+        .brand-panel {
+            position: relative;
+
+            min-height: 100vh;
+
+            padding:
+                48px
+                clamp(42px, 5vw, 88px)
+                38px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            background: var(--bg);
+
+            border-right:
+                1px solid
+                var(--border-soft);
+
+            overflow: hidden;
+        }
+
+
+        .brand-panel::before {
+            content: "";
+
+            position: absolute;
+
+            width: 310px;
+            height: 310px;
+
+            right: -175px;
+            top: 22%;
+
+            border:
+                1px solid
+                rgba(22, 168, 121, .14);
+
+            border-radius: 50%;
+        }
+
+
+        .brand-panel::after {
+            content: "";
+
+            position: absolute;
+
+            width: 190px;
+            height: 190px;
+
+            right: -110px;
+            top: calc(22% + 60px);
+
+            border:
+                1px solid
+                rgba(22, 168, 121, .11);
+
+            border-radius: 50%;
+        }
+
+
+        .brand-top {
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =========================================================
+           BRAND
+        ========================================================= */
+
+        .brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+
+        .brand-icon {
+            width: 52px;
+            height: 52px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 14px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 31px;
+
+            font-weight: 300;
+
+            box-shadow:
+                0 10px 24px
+                rgba(22, 168, 121, .18);
+        }
+
+
+        .brand-name strong {
+            display: block;
+
+            font-size: 26px;
+
+            line-height: 1;
+
+            letter-spacing: -.7px;
+        }
+
+
+        .brand-name span {
+            display: block;
+
+            margin-top: 6px;
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 3.2px;
+        }
+
+
+        /* =========================================================
+           LEFT CONTENT
+        ========================================================= */
+
+        .brand-content {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 520px;
+
+            margin-top: 50px;
+        }
+
+
+        .eyebrow {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 20px;
+
+            color: var(--primary-soft);
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 2.4px;
+
+            text-transform: uppercase;
+        }
+
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+        }
+
+
+        .brand-heading {
+            max-width: 520px;
+
+            font-size:
+                clamp(38px, 4vw, 62px);
+
+            line-height: 1.02;
+
+            letter-spacing: -2.8px;
+
+            font-weight: 800;
+        }
+
+
+        .brand-heading .accent {
+            color: var(--primary-soft);
+        }
+
+
+        .brand-description {
+            max-width: 500px;
+
+            margin-top: 24px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.75;
+        }
+
+
+        /* =========================================================
+           FEATURE LIST
+        ========================================================= */
+
+        .feature-list {
+            display: grid;
+
+            gap: 12px;
+
+            margin-top: 34px;
+        }
+
+
+        .feature {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: var(--text);
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .feature-icon {
+            width: 31px;
+            height: 31px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border:
+                1px solid
+                rgba(22, 168, 121, .28);
+
+            border-radius: 9px;
+
+            color: var(--primary-soft);
+
+            background:
+                rgba(22, 168, 121, .08);
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================================
+           LEFT MINI STATS
+        ========================================================= */
+
+        .system-preview {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-top: 35px;
+
+            max-width: 510px;
+        }
+
+
+        .preview-item {
+            min-height: 77px;
+
+            padding: 13px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 12px;
+
+            background: var(--panel);
+
+            transition:
+                border-color .2s ease,
+                transform .2s ease;
+        }
+
+
+        .preview-item:hover {
+            border-color:
+                rgba(22, 168, 121, .48);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .preview-label {
+            color: var(--muted-2);
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+
+        .preview-value {
+            margin-top: 8px;
+
+            color: var(--text);
+
+            font-size: 13px;
+
+            font-weight: 750;
+        }
+
+
+        .preview-status {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-top: 7px;
+
+            color: var(--primary-soft);
+
+            font-size: 9px;
+
+            font-weight: 700;
+        }
+
+
+        .preview-status::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--primary);
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .brand-footer {
+            position: relative;
+
+            z-index: 2;
+
+            color: var(--muted-2);
+
+            font-size: 10px;
+
+            line-height: 1.5;
+        }
+
+
+        .brand-footer strong {
+            color: var(--muted);
+
+            font-weight: 650;
+        }
+
+
+        /* =========================================================
+           RIGHT PANEL
+        ========================================================= */
+
+        .login-panel {
+            position: relative;
+
+            min-height: 100vh;
+
+            padding:
+                38px
+                clamp(35px, 6vw, 105px);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: var(--bg-soft);
+        }
+
+
+        .login-panel-inner {
+            width: 100%;
+
+            max-width: 580px;
+        }
+
+
+        /* =========================================================
+           TOP RIGHT
+        ========================================================= */
+
+        .panel-top {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            min-height: 46px;
+
+            margin-bottom: 42px;
+        }
+
+
+        .secure-label {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: .5px;
+        }
+
+
+        .secure-icon {
+            width: 28px;
+            height: 28px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 8px;
+
+            color: var(--primary-soft);
+
+            background: var(--panel);
+        }
+
+
+        /* =========================================================
+           THEME BUTTON
+        ========================================================= */
+
+        .theme-toggle {
+            position: absolute;
+
+            top: 28px;
+
+            right: 30px;
+
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 50%;
+
+            background: var(--panel);
+
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            box-shadow:
+                0 8px 22px
+                rgba(0, 0, 0, .08);
+
+            transition:
+                border-color .2s ease,
+                transform .2s ease,
+                background .2s ease;
+        }
+
+
+        .theme-toggle:hover {
+            border-color: var(--primary);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =========================================================
+           LOGIN HEADER
+        ========================================================= */
+
+        .login-header {
+            margin-bottom: 31px;
+        }
+
+
+        .login-eyebrow {
+            margin-bottom: 11px;
+
+            color: var(--primary-soft);
+
+            font-size: 10px;
+
+            font-weight: 850;
+
+            letter-spacing: 2.5px;
+
+            text-transform: uppercase;
+        }
+
+
+        .login-title {
+            color: var(--text);
+
+            font-size:
+                clamp(35px, 4vw, 51px);
+
+            line-height: 1.04;
+
+            letter-spacing: -2px;
+
+            font-weight: 800;
+        }
+
+
+        .login-description {
+            margin-top: 12px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           LOGIN CARD
+        ========================================================= */
+
+        .login-card {
+            padding: 29px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 17px;
+
+            background: var(--panel);
+
+            box-shadow: var(--shadow);
+        }
+
+
+        /* =========================================================
+           INPUTS
+        ========================================================= */
+
+        .input-group {
+            margin-bottom: 19px;
+        }
+
+
+        .input-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: var(--text);
+
+            font-size: 11px;
+
+            font-weight: 750;
+        }
+
+
+        .input-wrap {
+            position: relative;
+        }
+
+
+        .input-icon {
+            position: absolute;
+
+            left: 16px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 20px;
+
+            display: flex;
+
+            justify-content: center;
+
+            color: var(--primary-soft);
+
+            font-size: 15px;
+
+            pointer-events: none;
+        }
+
+
+        .login-input {
+            width: 100%;
+
+            height: 58px;
+
+            padding:
+                0 51px
+                0 47px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius: 11px;
+
+            outline: none;
+
+            background: var(--panel-2);
+
+            color: var(--text);
+
+            font-size: 14px;
+
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease,
+                background .2s ease;
+        }
+
+
+        .login-input::placeholder {
+            color: var(--muted-2);
+        }
+
+
+        .login-input:hover {
+            border-color:
+                rgba(22, 168, 121, .35);
+        }
+
+
+        .login-input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(22, 168, 121, .10);
+
+            background: var(--panel);
+        }
+
+
+        .password-toggle {
+            position: absolute;
+
+            right: 10px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            width: 38px;
+            height: 38px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: transparent;
+
+            color: var(--muted);
+
+            cursor: pointer;
+
+            font-size: 16px;
+        }
+
+
+        .password-toggle:hover {
+            background:
+                rgba(22, 168, 121, .08);
+
+            color: var(--primary-soft);
+        }
+
+
+        /* =========================================================
+           OPTIONS
+        ========================================================= */
+
+        .login-options {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin:
+                4px 0 22px;
+        }
+
+
+        .remember {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+
+        .remember input {
+            width: 15px;
+            height: 15px;
+
+            margin: 0;
+
+            accent-color: var(--primary);
+
+            cursor: pointer;
+        }
+
+
+        .forgot-button {
+            padding: 0;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--primary-soft);
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+
+        .forgot-button:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           LOGIN BUTTON
+        ========================================================= */
+
+        .login-button {
+            width: 100%;
+
+            height: 58px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: var(--primary);
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: .2px;
+
+            transition:
+                background .2s ease,
+                transform .15s ease,
+                box-shadow .2s ease;
+        }
+
+
+        .login-button:hover {
+            background: var(--primary-hover);
+
+            box-shadow:
+                0 12px 28px
+                rgba(22, 168, 121, .18);
+        }
+
+
+        .login-button:active {
+            transform:
+                translateY(1px);
+        }
+
+
+        .login-button:disabled {
+            opacity: .62;
+
+            cursor: not-allowed;
+
+            box-shadow: none;
+        }
+
+
+        .login-button-content {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 9px;
+        }
+
+
+        .login-button-icon {
+            font-size: 15px;
+        }
+
+
+        /* =========================================================
+           MESSAGE
+        ========================================================= */
+
+        .message {
+            min-height: 19px;
+
+            margin-top: 12px;
+
+            text-align: center;
+
+            color: var(--danger);
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        .message.success {
+            color: var(--success);
+        }
+
+
+        .message.error {
+            color: var(--danger);
+        }
+
+
+        /* =========================================================
+           REGISTER
+        ========================================================= */
+
+        .register-area {
+            margin-top: 25px;
+
+            padding-top: 23px;
+
+            border-top:
+                1px solid
+                var(--border-soft);
+
+            text-align: center;
+        }
+
+
+        .register-title {
+            color: var(--text);
+
+            font-size: 13px;
+
+            font-weight: 750;
+        }
+
+
+        .register-description {
+            margin-top: 6px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        .register-button {
+            margin-top: 15px;
+
+            min-width: 205px;
+
+            height: 45px;
+
+            padding:
+                0 18px;
+
+            border:
+                1px solid
+                var(--primary);
+
+            border-radius: 10px;
+
+            background: transparent;
+
+            color: var(--primary-soft);
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            transition:
+                background .2s ease,
+                color .2s ease,
+                border-color .2s ease;
+        }
+
+
+        .register-button:hover {
+            background: var(--primary);
+
+            color: white;
+
+            border-color: var(--primary);
+        }
+
+
+        /* =========================================================
+           SECURITY NOTE
+        ========================================================= */
+
+        .security-note {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-top: 20px;
+
+            color: var(--muted-2);
+
+            font-size: 9px;
+
+            letter-spacing: .15px;
+        }
+
+
+        .security-note span:first-child {
+            color: var(--primary-soft);
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1050px) {
+
+            .login-page {
+                grid-template-columns: 1fr;
+            }
+
+
+            .brand-panel {
+                min-height: auto;
+
+                padding:
+                    42px
+                    35px
+                    40px;
+
+                border-right: none;
+
+                border-bottom:
+                    1px solid
+                    var(--border-soft);
+            }
+
+
+            .brand-content {
+                margin-top: 55px;
+            }
+
+
+            .brand-heading {
+                max-width: 700px;
+            }
+
+
+            .brand-description {
+                max-width: 700px;
+            }
+
+
+            .feature-list {
+                grid-template-columns:
+                    repeat(3, 1fr);
+
+                max-width: 700px;
+            }
+
+
+            .system-preview {
+                max-width: 700px;
+            }
+
+
+            .login-panel {
+                min-height: auto;
+
+                padding:
+                    50px 35px 65px;
+            }
+
+
+            .panel-top {
+                display: none;
+            }
+
+
+            .theme-toggle {
+                top: 22px;
+
+                right: 22px;
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .brand-panel {
+                padding:
+                    30px 22px 35px;
+            }
+
+
+            .brand-heading {
+                font-size: 40px;
+
+                letter-spacing: -1.8px;
+            }
+
+
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+
+
+            .system-preview {
+                grid-template-columns: 1fr;
+            }
+
+
+            .login-panel {
+                padding:
+                    35px 18px 50px;
+            }
+
+
+            .login-card {
+                padding: 22px 18px;
+            }
+
+
+            .login-title {
+                font-size: 36px;
+            }
+
+
+            .login-options {
+                align-items: flex-start;
+            }
+        }
+
+
+        @media (max-width: 420px) {
+
+            .brand {
+                gap: 11px;
+            }
+
+
+            .brand-icon {
+                width: 46px;
+                height: 46px;
+
+                font-size: 27px;
+            }
+
+
+            .brand-name strong {
+                font-size: 23px;
+            }
+
+
+            .brand-heading {
+                font-size: 34px;
+            }
+
+
+            .login-title {
+                font-size: 32px;
+            }
+
+
+            .theme-toggle {
+                width: 41px;
+                height: 41px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================================================
+         THEME TOGGLE
+    ========================================================== -->
+
+    <button
+        type="button"
+        id="loginThemeToggle"
+        class="theme-toggle"
+        aria-label="Switch theme"
+        title="Switch to light mode"
+    >
+        ☾
+    </button>
+
+
+    <div class="login-page">
+
+        <!-- =====================================================
+             LEFT BRAND PANEL
+        ====================================================== -->
+
+        <section class="brand-panel">
+
+            <div class="brand-top">
+
+                <div class="brand">
+
+                    <div class="brand-icon">
+                        +
+                    </div>
+
+
+                    <div class="brand-name">
+
+                        <strong>
+                            MediCare
+                        </strong>
+
+                        <span>
+                            PHARMACY MANAGEMENT SYSTEM
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="brand-content">
+
+                    <div class="eyebrow">
+
+                        <span class="eyebrow-dot"></span>
+
+                        Pharmacy Operations
+
+                    </div>
+
+
+                    <h1 class="brand-heading">
+
+                        Pharmacy
+                        <br>
+
+                        management
+
+                        <span class="accent">
+                            made simple.
+                        </span>
+
+                    </h1>
+
+
+                    <p class="brand-description">
+
+                        Access your MediCare account to manage
+                        medicines, inventory and pharmacy orders
+                        from one simple system.
+
+                    </p>
+
+
+                    <div class="feature-list">
+
+                        <div class="feature">
+
+                            <div class="feature-icon">
+                                ✓
+                            </div>
+
+                            <span>
+                                Manage pharmacy inventory
+                            </span>
+
+                        </div>
+
+
+                        <div class="feature">
+
+                            <div class="feature-icon">
+                                ✓
+                            </div>
+
+                            <span>
+                                Manage medicine records
+                            </span>
+
+                        </div>
+
+
+                        <div class="feature">
+
+                            <div class="feature-icon">
+                                ✓
+                            </div>
+
+                            <span>
+                                Track customer orders
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="system-preview">
+
+                        <div class="preview-item">
+
+                            <div class="preview-label">
+                                Inventory
+                            </div>
+
+                            <div class="preview-value">
+                                Medicines
+                            </div>
+
+                            <div class="preview-status">
+                                Ready
+                            </div>
+
+                        </div>
+
+
+                        <div class="preview-item">
+
+                            <div class="preview-label">
+                                Orders
+                            </div>
+
+                            <div class="preview-value">
+                                Order Tracking
+                            </div>
+
+                            <div class="preview-status">
+                                Active
+                            </div>
+
+                        </div>
+
+
+                        <div class="preview-item">
+
+                            <div class="preview-label">
+                                Records
+                            </div>
+
+                            <div class="preview-value">
+                                Centralized
+                            </div>
+
+                            <div class="preview-status">
+                                Secure
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="brand-footer">
+
+                © 2026
+                <strong>
+                    MediCare Pharmacy Management System
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RIGHT LOGIN PANEL
+        ====================================================== -->
+
+        <section class="login-panel">
+
+            <div class="login-panel-inner">
+
+                <div class="panel-top">
+
+                    <div class="secure-label">
+
+                        <span class="secure-icon">
+                            ✓
+                        </span>
+
+                        Secure pharmacy access
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-header">
+
+                    <div class="login-eyebrow">
+                        WELCOME BACK
+                    </div>
+
+
+                    <h2 class="login-title">
+                        Sign in to MediCare
+                    </h2>
+
+
+                    <p class="login-description">
+                        Enter your account details to continue.
+                    </p>
+
+                </div>
+
+
+                <div class="login-card">
+
+                    <!-- =================================================
+                         USERNAME
+                    ================================================== -->
+
+                    <div class="input-group">
+
+                        <label
+                            class="input-label"
+                            for="username"
+                        >
+                            Username
+                        </label>
+
+
+                        <div class="input-wrap">
+
+                            <span class="input-icon">
+                                ▣
+                            </span>
+
+
+                            <input
+                                type="text"
+                                id="username"
+                                class="login-input"
+                                placeholder="Enter username"
+                                autocomplete="username"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PASSWORD
+                    ================================================== -->
+
+                    <div class="input-group">
+
+                        <label
+                            class="input-label"
+                            for="password"
+                        >
+                            Password
+                        </label>
+
+
+                        <div class="input-wrap">
+
+                            <span class="input-icon">
+                                ♧
+                            </span>
+
+
+                            <input
+                                type="password"
+                                id="password"
+                                class="login-input"
+                                placeholder="Enter password"
+                                autocomplete="current-password"
+                            >
+
+
+                            <button
+                                type="button"
+                                id="passwordToggle"
+                                class="password-toggle"
+                                aria-label="Show password"
+                                title="Show password"
+                            >
+                                ◉
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         OPTIONS
+                    ================================================== -->
+
+                    <div class="login-options">
+
+                        <label class="remember">
+
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                            >
+
+                            <span>
+                                Remember me
+                            </span>
+
+                        </label>
+
+
+                        <button
+                            type="button"
+                            id="forgotPassword"
+                            class="forgot-button"
+                        >
+                            Forgot password?
+                        </button>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         LOGIN BUTTON
+                    ================================================== -->
+
+                    <button
+                        type="button"
+                        id="loginButton"
+                        class="login-button"
+                    >
+
+                        <span
+                            class="login-button-content"
+                        >
+
+                            <span
+                                class="login-button-icon"
+                            >
+                                ♟
+                            </span>
+
+                            <span id="loginButtonText">
+                                Sign In
+                            </span>
+
+                        </span>
+
+                    </button>
+
+
+                    <!-- =================================================
+                         MESSAGE
+                    ================================================== -->
+
+                    <div
+                        id="message"
+                        class="message"
+                    ></div>
+
+
+                    <!-- =================================================
+                         REGISTRATION
+                    ================================================== -->
+
+                    <div class="register-area">
+
+                        <div class="register-title">
+                            New to MediCare?
+                        </div>
+
+
+                        <p class="register-description">
+                            Create your shopkeeper account to manage
+                            medicines, inventory and orders.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            id="registerButton"
+                            class="register-button"
+                        >
+                            ▣ &nbsp; Register as Shopkeeper
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="security-note">
+
+                    <span>
+                        ◆
+                    </span>
+
+                    Your account information is handled securely.
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <script>
+
+        /* =========================================================
+           CSRF COOKIE
+        ========================================================== */
+
+        function getCookie(name) {
+
+            let cookieValue = null;
+
+
+            if (
+                document.cookie &&
+                document.cookie !== ""
+            ) {
+
+                const cookies =
+                    document.cookie.split(";");
+
+
+                for (
+                    let cookie of cookies
+                ) {
+
+                    cookie =
+                        cookie.trim();
+
+
+                    if (
+                        cookie.startsWith(
+                            name + "="
+                        )
+                    ) {
+
+                        cookieValue =
+                            decodeURIComponent(
+                                cookie.substring(
+                                    name.length + 1
+                                )
+                            );
+
+                        break;
+                    }
+                }
+            }
+
+
+            return cookieValue;
+        }
+
+
+        /* =========================================================
+           THEME
+        ========================================================== */
+
+        const loginThemeToggle =
+            document.getElementById(
+                "loginThemeToggle"
+            );
+
+
+        function applyLoginTheme(theme) {
+
+            document.body.classList.toggle(
+                "light-mode",
+                theme === "light"
+            );
+
+
+            loginThemeToggle.textContent =
+                theme === "light"
+                    ? "☾"
+                    : "☀";
+
+
+            loginThemeToggle.title =
+                theme === "light"
+                    ? "Switch to dark mode"
+                    : "Switch to light mode";
+        }
+
+
+        const savedLoginTheme =
+            localStorage.getItem(
+                "medicare-theme"
+            ) || "dark";
+
+
+        applyLoginTheme(
+            savedLoginTheme
+        );
+
+
+        loginThemeToggle.addEventListener(
+            "click",
+            function () {
+
+                const nextTheme =
+                    document.body.classList.contains(
+                        "light-mode"
+                    )
+                        ? "dark"
+                        : "light";
+
+
+                localStorage.setItem(
+                    "medicare-theme",
+                    nextTheme
+                );
+
+
+                applyLoginTheme(
+                    nextTheme
+                );
+            }
+        );
+
+
+        /* =========================================================
+           PASSWORD TOGGLE
+        ========================================================== */
+
+        const loginPassword =
+            document.getElementById(
+                "password"
+            );
+
+
+        const loginPasswordToggle =
+            document.getElementById(
+                "passwordToggle"
+            );
+
+
+        loginPasswordToggle.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    loginPassword.type ===
+                    "password"
+                ) {
+
+                    loginPassword.type =
+                        "text";
+
+                    loginPasswordToggle.textContent =
+                        "◎";
+
+                    loginPasswordToggle.setAttribute(
+                        "aria-label",
+                        "Hide password"
+                    );
+
+                    loginPasswordToggle.setAttribute(
+                        "title",
+                        "Hide password"
+                    );
+
+                } else {
+
+                    loginPassword.type =
+                        "password";
+
+                    loginPasswordToggle.textContent =
+                        "◉";
+
+                    loginPasswordToggle.setAttribute(
+                        "aria-label",
+                        "Show password"
+                    );
+
+                    loginPasswordToggle.setAttribute(
+                        "title",
+                        "Show password"
+                    );
+                }
+            }
+        );
+
+
+        /* =========================================================
+           REMEMBER USERNAME
+        ========================================================== */
+
+        const rememberMe =
+            document.getElementById(
+                "rememberMe"
+            );
+
+
+        const loginUsername =
+            document.getElementById(
+                "username"
+            );
+
+
+        const rememberedUsername =
+            localStorage.getItem(
+                "medicare-remembered-username"
+            );
+
+
+        if (rememberedUsername) {
+
+            loginUsername.value =
+                rememberedUsername;
+
+            rememberMe.checked =
+                true;
+        }
+
+
+        /* =========================================================
+           LOGIN MESSAGE
+        ========================================================== */
+
+        const loginMessage =
+            document.getElementById(
+                "message"
+            );
+
+
+        function showLoginMessage(
+            text,
+            type
+        ) {
+
+            loginMessage.textContent =
+                text;
+
+            loginMessage.className =
+                "message " +
+                (type || "error");
+        }
+
+
+        /* =========================================================
+           LOGIN
+        ========================================================== */
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        const loginButtonText =
+            document.getElementById(
+                "loginButtonText"
+            );
+
+
+        function performLogin() {
+
+            const username =
+                loginUsername.value.trim();
+
+
+            const password =
+                loginPassword.value;
+
+
+            loginMessage.textContent =
+                "";
+
+            loginMessage.className =
+                "message";
+
+
+            if (username === "") {
+
+                showLoginMessage(
+                    "Please enter your username.",
+                    "error"
+                );
+
+                loginUsername.focus();
+
+                return;
+            }
+
+
+            if (password === "") {
+
+                showLoginMessage(
+                    "Please enter your password.",
+                    "error"
+                );
+
+                loginPassword.focus();
+
+                return;
+            }
+
+
+            if (rememberMe.checked) {
+
+                localStorage.setItem(
+                    "medicare-remembered-username",
+                    username
+                );
+
+            } else {
+
+                localStorage.removeItem(
+                    "medicare-remembered-username"
+                );
+            }
+
+
+            loginButton.disabled =
+                true;
+
+
+            loginButtonText.textContent =
+                "Signing In...";
+
+
+            fetch(
+                "/login-user/",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded",
+
+                        "X-CSRFToken":
+                            getCookie("csrftoken")
+                    },
+
+                    body:
+                        new URLSearchParams({
+                            username:
+                                username,
+
+                            password:
+                                password
+                        })
+                }
+            )
+            .then(
+                function(response) {
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Server returned " +
+                            response.status
+                        );
+                    }
+
+
+                    return response.json();
+                }
+            )
+            .then(
+                function(data) {
+
+                    if (data.success) {
+
+                        showLoginMessage(
+                            data.message ||
+                            "Login successful.",
+                            "success"
+                        );
+
+
+                        loginButtonText.textContent =
+                            "Success";
+
+
+                        setTimeout(
+                            function() {
+
+                                window.location.href =
+                                    data.redirect ||
+                                    "/user-dashboard/";
+
+                            },
+                            500
+                        );
+
+                    } else {
+
+                        showLoginMessage(
+                            data.message ||
+                            "Invalid username or password.",
+                            "error"
+                        );
+
+
+                        loginButton.disabled =
+                            false;
+
+
+                        loginButtonText.textContent =
+                            "Sign In";
+                    }
+                }
+            )
+            .catch(
+                function(error) {
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+
+                    showLoginMessage(
+                        "Unable to connect to the server. Please try again.",
+                        "error"
+                    );
+
+
+                    loginButton.disabled =
+                        false;
+
+
+                    loginButtonText.textContent =
+                        "Sign In";
+                }
+            );
+        }
+
+
+        loginButton.addEventListener(
+            "click",
+            performLogin
+        );
+
+
+        /* =========================================================
+           ENTER KEY
+        ========================================================== */
+
+        loginUsername.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    loginPassword.focus();
+                }
+            }
+        );
+
+
+        loginPassword.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    performLogin();
+                }
+            }
+        );
+
+
+        /* =========================================================
+           REGISTER
+        ========================================================== */
+
+        const registerButton =
+            document.getElementById(
+                "registerButton"
+            );
+
+
+        registerButton.addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "/shopkeeper-register/";
+            }
+        );
+
+
+        /* =========================================================
+           FORGOT PASSWORD
+        ========================================================== */
+
+        const forgotPassword =
+            document.getElementById(
+                "forgotPassword"
+            );
+
+
+        forgotPassword.addEventListener(
+            "click",
+            function() {
+
+                showLoginMessage(
+                    "Password reset is not available yet.",
+                    "error"
+                );
+            }
+        );
+
+    </script>
+
+</body>
+</html>

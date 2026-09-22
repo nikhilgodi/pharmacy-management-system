@@ -1,0 +1,1734 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="color-scheme" content="light dark">
+
+    <title>MediCare | Pharmacy</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        :root {
+
+            --sidebar: #0d3b2e;
+            --sidebar-active: #155c48;
+
+            --primary: #15966b;
+            --primary-dark: #0f805b;
+
+            --background: #f5f8f7;
+            --card: #ffffff;
+
+            --text: #12352b;
+            --muted: #667d75;
+            --border: #dce6e2;
+
+            --input-bg: #ffffff;
+
+            --success: #218b5b;
+            --danger: #c03939;
+
+            --topbar: #ffffff;
+        }
+
+
+        body.dark-mode {
+
+            --sidebar: #09271f;
+            --sidebar-active: #104c3b;
+
+            --primary: #20a878;
+            --primary-dark: #179365;
+
+            --background: #0f1715;
+            --card: #17211e;
+
+            --text: #edf6f2;
+            --muted: #9aada6;
+            --border: #2b3c36;
+
+            --input-bg: #111a17;
+
+            --success: #4dc58a;
+            --danger: #ef7070;
+
+            --topbar: #151e1b;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--background);
+
+            color: var(--text);
+
+            transition:
+                background .25s ease,
+                color .25s ease;
+        }
+
+
+        /* ================================
+           THEME TOGGLE
+        ================================= */
+
+        .theme-toggle {
+
+            position: fixed;
+
+            top: 20px;
+            right: 25px;
+
+            width: 44px;
+            height: 44px;
+
+            border-radius: 50%;
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 19px;
+
+            z-index: 1000;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            transition: .2s;
+        }
+
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+        }
+
+
+        .moon {
+            display: none;
+        }
+
+
+        body.dark-mode .sun {
+            display: none;
+        }
+
+
+        body.dark-mode .moon {
+            display: inline;
+        }
+
+
+        /* ================================
+           LAYOUT
+        ================================= */
+
+        .page {
+
+            min-height: 100vh;
+
+            display: flex;
+        }
+
+
+        /* ================================
+           SIDEBAR
+        ================================= */
+
+        .sidebar {
+
+            width: 255px;
+
+            min-height: 100vh;
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            background: var(--sidebar);
+
+            padding: 28px 18px;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                0 12px 25px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.09);
+        }
+
+
+        .brand-icon {
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 12px;
+
+            background: var(--primary);
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            font-weight: 700;
+        }
+
+
+        .brand-name strong {
+
+            display: block;
+
+            color: white;
+
+            font-size: 20px;
+
+            font-weight: 800;
+        }
+
+
+        .brand-name span {
+
+            display: block;
+
+            color: #8ba79d;
+
+            font-size: 8px;
+
+            letter-spacing: 2px;
+
+            margin-top: 2px;
+        }
+
+
+        .menu-title {
+
+            color: #76988e;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin:
+                31px 14px 11px;
+        }
+
+
+        .menu {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+
+        .menu-link {
+
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                0 14px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: #92ada4;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: .2s;
+        }
+
+
+        .menu-link:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,.06);
+        }
+
+
+        .menu-link.active {
+
+            color: white;
+
+            background: var(--sidebar-active);
+
+            box-shadow:
+                inset 3px 0 0 var(--primary);
+        }
+
+
+        .menu-icon {
+
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 17px;
+        }
+
+
+        .sidebar-space {
+            flex: 1;
+        }
+
+
+        .support {
+
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+
+            border-radius: 11px;
+
+            padding: 15px;
+
+            margin-bottom: 19px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .support-icon {
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(21,150,107,.18);
+
+            color: #55d5a6;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .support strong {
+
+            display: block;
+
+            color: white;
+
+            font-size: 10px;
+        }
+
+
+        .support span {
+
+            display: block;
+
+            color: #719087;
+
+            font-size: 8px;
+
+            margin-top: 4px;
+        }
+
+
+        .logout {
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            padding:
+                0 14px;
+
+            color: #91aaa2;
+
+            text-decoration: none;
+
+            font-size: 12px;
+        }
+
+
+        .logout:hover {
+            color: white;
+        }
+
+
+        /* ================================
+           MAIN
+        ================================= */
+
+        .main {
+
+            margin-left: 255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height: 100vh;
+        }
+
+
+        /* ================================
+           TOPBAR
+        ================================= */
+
+        .topbar {
+
+            height: 74px;
+
+            background: var(--topbar);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            padding:
+                0 35px;
+        }
+
+
+        .welcome {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            margin-right: 75px;
+        }
+
+
+        .welcome strong {
+            color: var(--text);
+        }
+
+
+        /* ================================
+           CONTENT
+        ================================= */
+
+        .content {
+
+            max-width: 1150px;
+
+            margin: auto;
+
+            padding:
+                40px 38px 55px;
+        }
+
+
+        .page-title {
+
+            color: var(--text);
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: -.7px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .page-description {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* ================================
+           WELCOME BOX
+        ================================= */
+
+        .welcome-box {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            padding: 25px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .welcome-box h2 {
+
+            color: var(--text);
+
+            font-size: 19px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .welcome-box p {
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        /* ================================
+           SEARCH
+        ================================= */
+
+        .toolbar {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .search-box {
+
+            flex: 1;
+
+            position: relative;
+        }
+
+
+        .search-box span {
+
+            position: absolute;
+
+            left: 16px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: var(--muted);
+
+            font-size: 18px;
+        }
+
+
+        .search-box input {
+
+            width: 100%;
+
+            height: 51px;
+
+            padding:
+                0 16px 0 45px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            background: var(--card);
+
+            color: var(--text);
+
+            outline: none;
+
+            font-size: 13px;
+        }
+
+
+        .search-box input:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(21,150,107,.10);
+        }
+
+
+        /* ================================
+           MEDICINE GRID
+        ================================= */
+
+        .medicine-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .medicine-card {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            transition: .2s;
+        }
+
+
+        .medicine-card:hover {
+
+            border-color: var(--primary);
+
+            transform: translateY(-2px);
+        }
+
+
+        .medicine-icon {
+
+            width: 46px;
+            height: 46px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(21,150,107,.10);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
+            margin-bottom: 17px;
+        }
+
+
+        .medicine-name {
+
+            color: var(--text);
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+            margin-bottom: 4px;
+        }
+
+
+        .medicine-category {
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .medicine-info {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 13px;
+
+            padding-top: 15px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+
+        .info-label {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .info-value {
+
+            color: var(--text);
+
+            font-size: 12px;
+
+            font-weight: 750;
+        }
+
+
+        .price {
+
+            color: var(--primary);
+        }
+
+
+        .stock {
+
+            color: var(--success);
+        }
+
+
+        .order-area {
+
+            margin-top: 18px;
+        }
+
+
+        .order-input {
+
+            width: 100%;
+
+            height: 42px;
+
+            padding:
+                0 12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 7px;
+
+            background: var(--input-bg);
+
+            color: var(--text);
+
+            outline: none;
+
+            font-size: 12px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .order-button {
+
+            width: 100%;
+
+            height: 42px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            background: var(--primary);
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 750;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+
+        .order-button:hover {
+
+            background: var(--primary-dark);
+        }
+
+
+        .order-button:disabled {
+
+            opacity: .6;
+
+            cursor: not-allowed;
+        }
+
+        /* INLINE ORDER MESSAGES - NO BROWSER POPUPS */
+        .order-message {
+            display: none;
+            margin: 8px 0 0;
+            padding: 9px 11px;
+            border-radius: 7px;
+            font-size: 12px;
+            line-height: 1.4;
+            font-weight: 600;
+            border: 1px solid transparent;
+        }
+
+        .order-message.error {
+            display: block;
+            color: var(--danger, #B83A3A);
+            background: rgba(184, 58, 58, 0.08);
+            border-color: rgba(184, 58, 58, 0.20);
+        }
+
+        .order-message.success {
+            display: block;
+            color: var(--success, #27844A);
+            background: rgba(39, 132, 74, 0.08);
+            border-color: rgba(39, 132, 74, 0.20);
+        }
+
+        .order-message.info {
+            display: block;
+            color: var(--secondary, #667085);
+            background: rgba(102, 112, 133, 0.08);
+            border-color: rgba(102, 112, 133, 0.18);
+        }
+
+
+        /* ================================
+           EMPTY
+        ================================= */
+
+        .empty {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            padding: 50px;
+
+            text-align: center;
+
+            color: var(--muted);
+
+            grid-column:
+                1 / -1;
+        }
+
+
+        .empty-icon {
+
+            font-size: 35px;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 950px) {
+
+            .medicine-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .page {
+
+                display: block;
+            }
+
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                min-height: auto;
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                width: 100%;
+            }
+
+
+            .content {
+
+                padding:
+                    30px 20px;
+            }
+
+
+            .medicine-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .toolbar {
+
+                flex-direction: column;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<button
+    type="button"
+    id="themeToggle"
+    class="theme-toggle"
+    title="Switch to dark mode"
+    aria-label="Switch theme"
+>
+
+    <span class="sun">
+        ☀
+    </span>
+
+    <span class="moon">
+        ☾
+    </span>
+
+</button>
+
+
+
+<div class="page">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ✚
+            </div>
+
+            <div class="brand-name">
+
+                <strong>
+                    MediCare
+                </strong>
+
+                <span>
+                    PHARMACY
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="menu-title">
+            PHARMACY
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a
+                href="/user-dashboard/"
+                class="menu-link active"
+            >
+
+                <span class="menu-icon">
+                    ▦
+                </span>
+
+                <span>
+                    Medicines
+                </span>
+
+            </a>
+
+
+            <a
+                href="/my-orders/"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ▤
+                </span>
+
+                <span>
+                    My Orders
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="sidebar-space"></div>
+
+
+
+        <div class="support">
+
+            <div class="support-icon">
+                ♧
+            </div>
+
+            <div>
+
+                <strong>
+                    Need assistance?
+                </strong>
+
+                <span>
+                    Contact support
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <a
+            href="/logout/"
+            class="logout"
+        >
+
+            <span>
+                ↪
+            </span>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+
+        <header class="topbar">
+
+            <div class="welcome">
+
+                Welcome,
+                <strong>
+                    {{ request.user.first_name|default:request.user.username }}
+                </strong>
+
+            </div>
+
+        </header>
+
+
+
+        <div class="content">
+
+
+            <h1 class="page-title">
+                Medicine Store
+            </h1>
+
+
+            <p class="page-description">
+                Browse available medicines and place your orders.
+            </p>
+
+
+
+            <section class="welcome-box">
+
+                <h2>
+                    Find the medicine you need
+                </h2>
+
+                <p>
+                    Check medicine details, availability and price before placing an order.
+                </p>
+
+            </section>
+
+
+
+            <!-- SEARCH -->
+
+            <div class="toolbar">
+
+                <div class="search-box">
+
+                    <span>
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        id="medicineSearch"
+                        placeholder="Search medicine..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MEDICINES -->
+
+            <div
+                class="medicine-grid"
+                id="medicineGrid"
+            >
+
+
+                {% for medicine in medicines %}
+
+                <article
+                    class="medicine-card"
+                    data-name="{{ medicine.name|lower }}"
+                    data-category="{{ medicine.category|lower }}"
+                >
+
+
+                    <div class="medicine-icon">
+                        💊
+                    </div>
+
+
+                    <div class="medicine-name">
+                        {{ medicine.name }}
+                    </div>
+
+
+                    <div class="medicine-category">
+                        {{ medicine.category }}
+                    </div>
+
+
+
+                    <div class="medicine-info">
+
+
+                        <div>
+
+                            <span class="info-label">
+                                PRICE
+                            </span>
+
+                            <span class="info-value price">
+                                ₹{{ medicine.price }}
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="info-label">
+                                AVAILABLE
+                            </span>
+
+                            <span class="info-value stock">
+                                {{ medicine.count }}
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="info-label">
+                                MANUFACTURED
+                            </span>
+
+                            <span class="info-value">
+                                {{ medicine.manufacture_date|date:"d M Y" }}
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <span class="info-label">
+                                EXPIRY
+                            </span>
+
+                            <span class="info-value">
+                                {{ medicine.expiry_date|date:"d M Y" }}
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    {% if medicine.count > 0 %}
+
+                    <div class="order-area">
+
+                        <input
+                            type="number"
+                            class="order-input order-count"
+                            min="1"
+                            max="{{ medicine.count }}"
+                            value="1"
+                            data-id="{{ medicine.id }}"
+                            placeholder="Count"
+                        >
+
+                        <div class="order-message" aria-live="polite"></div>
+
+                        <button
+                            type="button"
+                            class="order-button"
+                            data-id="{{ medicine.id }}"
+                        >
+
+                            Order Medicine
+
+                        </button>
+
+                    </div>
+
+                    {% else %}
+
+                    <div class="order-area">
+
+                        <button
+                            type="button"
+                            class="order-button"
+                            disabled
+                        >
+
+                            Out of Stock
+
+                        </button>
+
+                    </div>
+
+                    {% endif %}
+
+
+                </article>
+
+                {% empty %}
+
+                <div class="empty">
+
+                    <div class="empty-icon">
+                        💊
+                    </div>
+
+                    <div>
+                        No medicines are currently available.
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<script>
+
+    /* ==========================================
+       THEME
+    ========================================== */
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+
+    function applyTheme(theme) {
+
+        if (theme === "dark") {
+
+            document.body.classList.add("dark-mode");
+
+            themeToggle.title =
+                "Switch to light mode";
+
+        } else {
+
+            document.body.classList.remove("dark-mode");
+
+            themeToggle.title =
+                "Switch to dark mode";
+        }
+    }
+
+
+    const savedTheme =
+        localStorage.getItem("medicare-theme");
+
+
+    if (savedTheme === "dark") {
+
+        applyTheme("dark");
+
+    } else {
+
+        applyTheme("light");
+    }
+
+
+    themeToggle.addEventListener(
+        "click",
+        function () {
+
+            const isDark =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
+
+
+            if (isDark) {
+
+                applyTheme("light");
+
+                localStorage.setItem(
+                    "medicare-theme",
+                    "light"
+                );
+
+            } else {
+
+                applyTheme("dark");
+
+                localStorage.setItem(
+                    "medicare-theme",
+                    "dark"
+                );
+            }
+
+        }
+    );
+
+
+
+    /* ==========================================
+       SEARCH
+    ========================================== */
+
+    const search =
+        document.getElementById(
+            "medicineSearch"
+        );
+
+
+    if (search) {
+
+        search.addEventListener(
+            "input",
+            function () {
+
+                const value =
+                    this.value
+                        .trim()
+                        .toLowerCase();
+
+
+                const cards =
+                    document.querySelectorAll(
+                        ".medicine-card"
+                    );
+
+
+                cards.forEach(
+                    function (card) {
+
+                        const name =
+                            card.dataset.name || "";
+
+                        const category =
+                            card.dataset.category || "";
+
+
+                        if (
+                            name.includes(value) ||
+                            category.includes(value)
+                        ) {
+
+                            card.style.display =
+                                "";
+
+                        } else {
+
+                            card.style.display =
+                                "none";
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+
+    /* ==========================================
+       ORDER MEDICINE
+    ========================================== */
+
+    function getCookie(name) {
+
+        let cookieValue = null;
+
+
+        if (
+            document.cookie &&
+            document.cookie !== ""
+        ) {
+
+            const cookies =
+                document.cookie.split(";");
+
+
+            for (
+                let cookie of cookies
+            ) {
+
+                cookie = cookie.trim();
+
+
+                if (
+                    cookie.startsWith(
+                        name + "="
+                    )
+                ) {
+
+                    cookieValue =
+                        decodeURIComponent(
+                            cookie.substring(
+                                name.length + 1
+                            )
+                        );
+
+                    break;
+                }
+            }
+        }
+
+
+        return cookieValue;
+    }
+
+
+
+    function showOrderMessage(card, message, type) {
+
+        const messageElement =
+            card.querySelector(".order-message");
+
+        if (!messageElement) return;
+
+        messageElement.textContent = message;
+        messageElement.className =
+            "order-message " + (type || "info");
+
+    }
+
+
+    const orderButtons =
+        document.querySelectorAll(
+            ".order-button:not(:disabled)"
+        );
+
+
+    orderButtons.forEach(
+        function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const medicineId =
+                        this.dataset.id;
+
+
+                    const card =
+                        this.closest(
+                            ".medicine-card"
+                        );
+
+
+                    const countInput =
+                        card.querySelector(
+                            ".order-count"
+                        );
+
+
+                    const count =
+                        countInput.value;
+
+
+                    const availableCount =
+                        parseInt(
+                            countInput.getAttribute("max"),
+                            10
+                        );
+
+
+                    if (
+                        !count ||
+                        parseInt(count, 10) < 1
+                    ) {
+
+                        showOrderMessage(
+                            card,
+                            "Please enter a valid count.",
+                            "error"
+                        );
+
+                        countInput.focus();
+                        return;
+                    }
+
+
+                    if (
+                        !Number.isNaN(availableCount) &&
+                        parseInt(count, 10) > availableCount
+                    ) {
+
+                        showOrderMessage(
+                            card,
+                            "Order count cannot be greater than available count.",
+                            "error"
+                        );
+
+                        countInput.focus();
+                        return;
+                    }
+
+
+                    showOrderMessage(
+                        card,
+                        "Placing your order...",
+                        "info"
+                    );
+
+
+                    button.disabled = true;
+
+                    button.textContent =
+                        "Placing Order...";
+
+
+                    fetch(
+                        `/order-medicine/${medicineId}/`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/x-www-form-urlencoded",
+
+                                "X-CSRFToken":
+                                    getCookie("csrftoken")
+                            },
+
+                            body:
+                                new URLSearchParams({
+                                    count: count
+                                })
+                        }
+                    )
+
+                    .then(
+                        function (response) {
+                            return response.json();
+                        }
+                    )
+
+                    .then(
+                        function (data) {
+
+                            if (data.success) {
+
+                                showOrderMessage(
+                                    card,
+                                    data.message ||
+                                        "Medicine ordered successfully.",
+                                    "success"
+                                );
+
+                                setTimeout(
+                                    function () {
+                                        window.location.reload();
+                                    },
+                                    900
+                                );
+
+                            } else {
+
+                                showOrderMessage(
+                                    card,
+                                    data.message ||
+                                        "Unable to place order.",
+                                    "error"
+                                );
+
+                                button.disabled =
+                                    false;
+
+                                button.textContent =
+                                    "Order Medicine";
+                            }
+
+                        }
+                    )
+
+                    .catch(
+                        function (error) {
+
+                            console.error(
+                                "Order error:",
+                                error
+                            );
+
+
+                            showOrderMessage(
+                                card,
+                                "Something went wrong while placing the order. Please try again.",
+                                "error"
+                            );
+
+
+                            button.disabled =
+                                false;
+
+                            button.textContent =
+                                "Order Medicine";
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,5803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MediCare | Admin Dashboard</title>
+
+    {% load static %}
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        /* =====================================================
+           MEDICARE ADMIN PANEL
+        ====================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+
+            --navy: #0B3B2E;
+            --navy-2: #0F4A3A;
+
+            --blue: #0F766E;
+            --blue-dark: #0B5F58;
+            --blue-soft: #E8F5F2;
+
+            --green: #27844A;
+            --green-soft: #EAF6EE;
+
+            --orange: #B7791F;
+            --orange-soft: #FFF8E7;
+
+            --red: #B83A3A;
+            --red-soft: #FDEEEE;
+
+            --purple: #5F6B63;
+            --purple-soft: #F1F4F2;
+
+            --bg: #F5F7F6;
+            --white: #ffffff;
+
+            --text: #173C30;
+            --muted: #66756F;
+            --light: #7A8790;
+
+            --border: #DCE5E0;
+
+        }
+
+
+        body {
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: var(--bg);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           APP
+        ====================================================== */
+
+        .app {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ====================================================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 255px;
+
+            background:
+                var(--navy);
+
+            padding: 25px 16px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            z-index: 100;
+
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            padding:
+                0 10px 25px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.08);
+
+        }
+
+
+        .brand-icon {
+
+            width: 43px;
+            height: 43px;
+
+            border-radius: 12px;
+
+            background:
+                var(--navy);
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(59,130,246,.25);
+
+        }
+
+
+        .brand-name strong {
+
+            display: block;
+
+            color: white;
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+        }
+
+
+        .brand-name span {
+
+            display: block;
+
+            color: #7A8790;
+
+            font-size: 8px;
+
+            letter-spacing: 1.8px;
+
+            margin-top: 2px;
+
+        }
+
+
+        .menu-title {
+
+            color: #66756F;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.3px;
+
+            padding:
+                25px 12px 9px;
+
+        }
+
+
+        .menu {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
+
+        }
+
+
+        .menu-link {
+
+            height: 45px;
+
+            padding:
+                0 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            color: #7A8790;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+        }
+
+
+        .menu-link i {
+
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 16px;
+
+        }
+
+
+        .menu-link:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,.06);
+
+        }
+
+
+        .menu-link.active {
+
+            color: white;
+
+            background:
+                var(--navy);
+
+            box-shadow:
+                inset 3px 0 0 #15915F;
+
+        }
+
+
+        .sidebar-space {
+
+            flex: 1;
+
+        }
+
+
+        .support {
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.06);
+
+            display: flex;
+
+            gap: 9px;
+
+            align-items: center;
+
+            margin-bottom: 11px;
+
+        }
+
+
+        .support-icon {
+
+            width: 32px;
+            height: 32px;
+
+            border-radius: 8px;
+
+            background:
+                rgba(59,130,246,.15);
+
+            color: #6CC7A1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .support strong {
+
+            display: block;
+
+            color: #e4e7ec;
+
+            font-size: 9px;
+
+        }
+
+
+        .support span {
+
+            display: block;
+
+            color: #66756F;
+
+            font-size: 8px;
+
+            margin-top: 2px;
+
+        }
+
+
+        .logout {
+
+            height: 42px;
+
+            padding:
+                0 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            color: #7A8790;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+        }
+
+
+        .logout:hover {
+
+            background:
+                rgba(239,68,68,.1);
+
+            color: #E87979;
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ====================================================== */
+
+        .main {
+
+            margin-left: 255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ====================================================== */
+
+        .topbar {
+
+            height: 72px;
+
+            background:
+                rgba(255,255,255,.97);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            padding:
+                0 35px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 50;
+
+        }
+
+
+        .top-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+        }
+
+
+        .notification {
+
+            width: 39px;
+            height: 39px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #66756F;
+
+            font-size: 16px;
+
+        }
+
+
+        .divider {
+
+            width: 1px;
+
+            height: 31px;
+
+            background:
+                var(--border);
+
+        }
+
+
+        .profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+        }
+
+
+        .avatar {
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                var(--navy);
+
+            color: #145C46;
+
+            font-weight: 800;
+
+        }
+
+
+        .profile-text strong {
+
+            display: block;
+
+            font-size: 11px;
+
+        }
+
+
+        .profile-text span {
+
+            display: block;
+
+            color: var(--light);
+
+            font-size: 8px;
+
+            margin-top: 2px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ====================================================== */
+
+        .content {
+
+            max-width: 1600px;
+
+            margin: auto;
+
+            padding:
+                32px 35px 40px;
+
+        }
+
+
+        /* =====================================================
+           SECTION
+        ====================================================== */
+
+        .page-section {
+
+            display: none;
+
+            animation:
+                sectionIn .25s ease;
+
+        }
+
+
+        .page-section.active {
+
+            display: block;
+
+        }
+
+
+        @keyframes sectionIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(7px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-end;
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: var(--light);
+
+            font-size: 9px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .breadcrumb strong {
+
+            color: var(--blue);
+
+        }
+
+
+        .hero h1 {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: -.9px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .hero p {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+        }
+
+
+        .date-box {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            padding:
+                9px 13px;
+
+            background: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+        }
+
+
+        .date-box i {
+
+            color: var(--blue);
+
+            font-size: 16px;
+
+        }
+
+
+        .date-box small {
+
+            display: block;
+
+            color: var(--light);
+
+            font-size: 7px;
+
+            letter-spacing: .8px;
+
+        }
+
+
+        .date-box strong {
+
+            display: block;
+
+            font-size: 10px;
+
+            margin-top: 2px;
+
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ====================================================== */
+
+        .primary-button {
+
+            border: none;
+
+            background:
+                var(--blue);
+
+            color: white;
+
+            border-radius: 8px;
+
+            padding:
+                10px 15px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            transition: .2s;
+
+        }
+
+
+        .primary-button:hover {
+
+            background:
+                var(--blue-dark);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        .secondary-button {
+
+            border:
+                1px solid var(--border);
+
+            background:
+                white;
+
+            color:
+                var(--muted);
+
+            border-radius: 8px;
+
+            padding:
+                10px 15px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+        }
+
+
+        /* =====================================================
+           STAT CARDS
+        ====================================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            min-height: 112px;
+
+            padding:
+                17px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(16,24,40,.04);
+
+        }
+
+
+        .stat-icon {
+
+            width: 44px;
+            height: 44px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .blue {
+
+            background:
+                var(--blue-soft);
+
+            color:
+                var(--blue);
+
+        }
+
+
+        .orange {
+
+            background:
+                var(--orange-soft);
+
+            color:
+                var(--orange);
+
+        }
+
+
+        .green {
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green);
+
+        }
+
+
+        .purple {
+
+            background:
+                var(--purple-soft);
+
+            color:
+                var(--purple);
+
+        }
+
+
+        .red {
+
+            background:
+                var(--red-soft);
+
+            color:
+                var(--red);
+
+        }
+
+
+        .stat-card span {
+
+            display: block;
+
+            color:
+                var(--muted);
+
+            font-size: 8px;
+
+        }
+
+
+        .stat-card strong {
+
+            display: block;
+
+            color:
+                var(--text);
+
+            font-size: 21px;
+
+            margin-top: 4px;
+
+        }
+
+
+        .stat-card small {
+
+            display: block;
+
+            color:
+                var(--light);
+
+            font-size: 7px;
+
+            margin-top: 3px;
+
+        }
+
+
+        /* =====================================================
+           OVERVIEW GRID
+        ====================================================== */
+
+        .overview-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr 1fr;
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .overview-card {
+
+            background: white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            padding:
+                20px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(16,24,40,.04);
+
+        }
+
+
+        .card-label {
+
+            color:
+                var(--blue);
+
+            font-size: 7px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .overview-card h2 {
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .overview-card > p {
+
+            color:
+                var(--light);
+
+            font-size: 8px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .metric-row {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                10px 0;
+
+            border-bottom:
+                1px solid #E8EEEA;
+
+        }
+
+
+        .metric-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .metric-name {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color:
+                var(--muted);
+
+            font-size: 9px;
+
+        }
+
+
+        .dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+        }
+
+
+        .dot.blue-dot {
+            background: var(--blue);
+        }
+
+        .dot.green-dot {
+            background: var(--green);
+        }
+
+        .dot.orange-dot {
+            background: var(--orange);
+        }
+
+        .dot.red-dot {
+            background: var(--red);
+        }
+
+
+        .metric-value {
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================================
+           ALERT
+        ====================================================== */
+
+        .alert-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                11px;
+
+            background:
+                #F7F9F8;
+
+            border-radius: 9px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .alert-icon {
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        .alert-item strong {
+
+            display: block;
+
+            font-size: 9px;
+
+        }
+
+
+        .alert-item span {
+
+            display: block;
+
+            color:
+                var(--light);
+
+            font-size: 7px;
+
+            margin-top: 2px;
+
+        }
+
+
+        /* =====================================================
+           SECTION HEADER
+        ====================================================== */
+
+        .section-heading {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-end;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .section-heading h2 {
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            letter-spacing: -.6px;
+
+        }
+
+
+        .section-heading p {
+
+            color:
+                var(--muted);
+
+            font-size: 11px;
+
+            margin-top: 4px;
+
+        }
+
+
+        .heading-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+        }
+
+
+        /* =====================================================
+           PANEL
+        ====================================================== */
+
+        .panel {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(16,24,40,.04);
+
+            overflow: hidden;
+
+        }
+
+
+        .panel-top {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid #E8EEEA;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+        }
+
+
+        .panel-top h3 {
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+        }
+
+
+        .panel-top p {
+
+            color:
+                var(--light);
+
+            font-size: 8px;
+
+            margin-top: 3px;
+
+        }
+
+
+        /* =====================================================
+           FILTERS
+        ====================================================== */
+
+        .filters {
+
+            padding:
+                15px 20px;
+
+            display: flex;
+
+            gap: 10px;
+
+            border-bottom:
+                1px solid #E8EEEA;
+
+        }
+
+
+        .search {
+
+            flex: 1;
+
+            position: relative;
+
+        }
+
+
+        .search i {
+
+            position: absolute;
+
+            left: 13px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color:
+                var(--light);
+
+        }
+
+
+        .search input {
+
+            width: 100%;
+
+            height: 40px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background:
+                #FAFCFB;
+
+            padding:
+                0 12px 0 36px;
+
+            outline: none;
+
+            font-size: 10px;
+
+        }
+
+
+        .filter-select {
+
+            width: 190px;
+
+            height: 40px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background:
+                #FAFCFB;
+
+            padding:
+                0 10px;
+
+            outline: none;
+
+            font-size: 10px;
+
+            color:
+                var(--muted);
+
+        }
+
+
+        /* =====================================================
+           TABLE
+        ====================================================== */
+
+        .table-wrap {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse:
+                collapse;
+
+            min-width: 850px;
+
+        }
+
+
+        th {
+
+            background:
+                #F7F9F8;
+
+            color:
+                #66756F;
+
+            text-align:
+                left;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            letter-spacing: .5px;
+
+            padding:
+                14px 17px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        td {
+
+            padding:
+                15px 17px;
+
+            border-bottom:
+                1px solid #E8EEEA;
+
+            font-size: 10px;
+
+            color:
+                var(--muted);
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                #F4F9F6;
+
+        }
+
+
+        tbody tr:last-child td {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .medicine-cell {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+        }
+
+
+        .medicine-icon {
+
+            width: 34px;
+            height: 34px;
+
+            border-radius: 9px;
+
+            background:
+                var(--blue-soft);
+
+            color:
+                var(--blue);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content:
+                center;
+
+        }
+
+
+        .medicine-cell strong {
+
+            display: block;
+
+            color:
+                var(--text);
+
+            font-size: 10px;
+
+        }
+
+
+        .medicine-cell span {
+
+            display: block;
+
+            color:
+                var(--light);
+
+            font-size: 7px;
+
+            margin-top: 2px;
+
+        }
+
+
+        .table-price {
+
+            font-weight: 800;
+
+            color:
+                var(--text);
+
+        }
+
+
+        /* =====================================================
+           STATUS
+        ====================================================== */
+
+        .status {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap: 5px;
+
+            padding:
+                5px 8px;
+
+            border-radius:
+                20px;
+
+            font-size: 7px;
+
+            font-weight: 800;
+
+        }
+
+
+        .status i {
+
+            font-size: 5px;
+
+        }
+
+
+        .status.active {
+
+            background:
+                var(--green-soft);
+
+            color:
+                #0F6B47;
+
+        }
+
+
+        .status.expired {
+
+            background:
+                var(--red-soft);
+
+            color:
+                #B83A3A;
+
+        }
+
+
+        .status.expiring {
+
+            background:
+                var(--orange-soft);
+
+            color:
+                #9A6414;
+
+        }
+
+
+        .status.pending {
+
+            background:
+                var(--orange-soft);
+
+            color:
+                #9A6414;
+
+        }
+
+
+        .status.approved {
+
+            background:
+                var(--green-soft);
+
+            color:
+                #0F6B47;
+
+        }
+
+
+        .status.rejected {
+
+            background:
+                var(--red-soft);
+
+            color:
+                #B83A3A;
+
+        }
+
+
+        /* =====================================================
+           ACTION BUTTONS
+        ====================================================== */
+
+        .actions {
+
+            display: flex;
+
+            gap: 6px;
+
+        }
+
+
+        .action {
+
+            width: 31px;
+            height: 31px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+        }
+
+
+        .edit {
+
+            background:
+                var(--blue-soft);
+
+            color:
+                var(--blue);
+
+        }
+
+
+        .delete {
+
+            background:
+                var(--red-soft);
+
+            color:
+                var(--red);
+
+        }
+
+
+        .approve {
+
+            background:
+                var(--green-soft);
+
+            color:
+                var(--green);
+
+        }
+
+
+        .reject {
+
+            background:
+                var(--red-soft);
+
+            color:
+                var(--red);
+
+        }
+
+
+        /* =====================================================
+           ADD MEDICINE
+        ====================================================== */
+
+        .add-layout {
+
+            display: grid;
+
+            grid-template-columns:
+                1.5fr .8fr;
+
+            gap: 18px;
+
+        }
+
+
+        .form-panel {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            padding:
+                25px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(16,24,40,.04);
+
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap:
+                17px;
+
+        }
+
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+
+        }
+
+
+        .field.full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .field label {
+
+            font-size: 9px;
+
+            font-weight: 750;
+
+            color:
+                var(--text);
+
+        }
+
+
+        .field input {
+
+            height: 43px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            padding:
+                0 12px;
+
+            outline: none;
+
+            background:
+                #FAFCFB;
+
+            font-size: 10px;
+
+            color:
+                var(--text);
+
+        }
+
+
+        .field input:focus {
+
+            background:
+                white;
+
+            border-color:
+                #93b4ed;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37,99,235,.06);
+
+        }
+
+
+        .form-actions {
+
+            display: flex;
+
+            gap: 9px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .form-message {
+
+            min-height: 18px;
+
+            margin-top: 10px;
+
+            font-size: 9px;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =====================================================
+           INFO CARD
+        ====================================================== */
+
+        .info-panel {
+
+            background:
+                var(--navy);
+
+            border:
+                1px solid #DCEFE7;
+
+            border-radius:
+                13px;
+
+            padding:
+                23px;
+
+        }
+
+
+        .info-icon {
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 12px;
+
+            background:
+                white;
+
+            color:
+                var(--blue);
+
+            display: flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size: 20px;
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .info-panel h3 {
+
+            font-size:
+                16px;
+
+            font-weight:
+                800;
+
+            margin-bottom:
+                7px;
+
+        }
+
+
+        .info-panel p {
+
+            color:
+                var(--muted);
+
+            font-size:
+                9px;
+
+            line-height:
+                1.6;
+
+            margin-bottom:
+                18px;
+
+        }
+
+
+        .info-list {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                11px;
+
+        }
+
+
+        .info-list div {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .info-list i {
+
+            color:
+                var(--green);
+
+        }
+
+
+        /* =====================================================
+           REPORTS
+        ====================================================== */
+
+        .report-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                18px;
+
+        }
+
+
+        .report-card {
+
+            background:
+                white;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            padding:
+                22px;
+
+            box-shadow:
+                0 4px 18px
+                rgba(16,24,40,.04);
+
+        }
+
+
+        .report-card h3 {
+
+            font-size:
+                15px;
+
+            font-weight:
+                800;
+
+            margin-bottom:
+                4px;
+
+        }
+
+
+        .report-card p {
+
+            color:
+                var(--light);
+
+            font-size:
+                8px;
+
+            margin-bottom:
+                17px;
+
+        }
+
+
+        .big-number {
+
+            font-size:
+                29px;
+
+            font-weight:
+                800;
+
+            margin-bottom:
+                13px;
+
+        }
+
+
+        .progress {
+
+            height:
+                7px;
+
+            background:
+                #E8EEEA;
+
+            border-radius:
+                20px;
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .progress-bar {
+
+            height:
+                100%;
+
+            border-radius:
+                20px;
+
+            background:
+                var(--blue);
+
+        }
+
+
+        .report-stat {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            padding:
+                11px 0;
+
+            border-bottom:
+                1px solid #E8EEEA;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .report-stat:last-child {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .report-stat span {
+
+            color:
+                var(--muted);
+
+        }
+
+
+        .report-stat strong {
+
+            color:
+                var(--text);
+
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ====================================================== */
+
+        .empty {
+
+            padding:
+                65px 20px;
+
+            text-align:
+                center;
+
+            color:
+                var(--light);
+
+        }
+
+
+        .empty i {
+
+            font-size:
+                32px;
+
+            display:
+                block;
+
+            margin-bottom:
+                10px;
+
+        }
+
+
+        .empty strong {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                11px;
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ====================================================== */
+
+        .toast {
+
+            position:
+                fixed;
+
+            right:
+                25px;
+
+            bottom:
+                25px;
+
+            min-width:
+                280px;
+
+            padding:
+                14px 16px;
+
+            border-radius:
+                10px;
+
+            background:
+                #12352A;
+
+            color:
+                white;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0,0,0,.18);
+
+            transform:
+                translateY(100px);
+
+            opacity:
+                0;
+
+            pointer-events:
+                none;
+
+            transition:
+                .3s;
+
+            z-index:
+                500;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .toast.show {
+
+            transform:
+                translateY(0);
+
+            opacity:
+                1;
+
+        }
+
+
+        .toast.success i {
+
+            color:
+                #5CCF98;
+
+        }
+
+
+        .toast.error i {
+
+            color:
+                #E87979;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 1200px) {
+
+            .stats {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+            .overview-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+            .add-layout {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                display:
+                    none;
+
+            }
+
+            .main {
+
+                margin-left:
+                    0;
+
+                width:
+                    100%;
+
+            }
+
+            .content {
+
+                padding:
+                    25px 20px;
+
+            }
+
+            .report-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .stats {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+            .hero {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+                gap:
+                    12px;
+
+            }
+
+            .filters {
+
+                flex-direction:
+                    column;
+
+            }
+
+            .filter-select {
+
+                width:
+                    100%;
+
+            }
+
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+            .field.full {
+
+                grid-column:
+                    auto;
+
+            }
+
+            .section-heading {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+                gap:
+                    12px;
+
+            }
+
+            .topbar {
+
+                padding:
+                    0 18px;
+
+            }
+
+        }
+
+    
+        /* PREMIUM SOLID GREEN PHARMACY THEME */
+        :root { --navy:#12352A; --navy-2:#173C30; --blue:#15915F; --blue-dark:#0F6B47; --blue-soft:#EAF7F1; --green:#15915F; --green-soft:#EAF7F1; --orange:#B7791F; --orange-soft:#FFF8E7; --red:#B83A3A; --red-soft:#FDEEEE; --purple:#5F6B63; --purple-soft:#F1F4F2; --bg:#F5F7F6; --white:#FFFFFF; --text:#173C30; --muted:#66756F; --light:#7A8790; --border:#DCE5E0; }
+        .sidebar{background:var(--navy)} .brand-icon{background:var(--blue);box-shadow:none} .menu-link.active{background:#1B4D3D;box-shadow:inset 3px 0 0 var(--blue)} .menu-link:hover{background:#1A4437} .support{background:#173C30;border-color:#285444} .support-icon{background:#1F5B47;color:#73D2AA} .primary-button{background:var(--blue)} .primary-button:hover{background:var(--blue-dark)} .info-panel{background:#EAF7F1;border-color:#CBE7DA} .progress-bar{background:var(--blue)} .toast{background:var(--navy)}
+
+        /* =====================================================
+           LIGHT / DARK MODE
+           Light mode keeps the original MediCare green design.
+        ====================================================== */
+
+        .theme-toggle {
+            width: 39px;
+            height: 39px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #ffffff;
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: .2s;
+            margin-right: 0;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--blue);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle .moon-icon {
+            display: none;
+        }
+
+        .theme-toggle .sun-icon {
+            display: inline;
+        }
+
+        body.dark-mode {
+            --navy: #082B22;
+            --navy-2: #0D3A2E;
+            --blue: #36A98A;
+            --blue-dark: #2B9277;
+            --blue-soft: #123C32;
+            --green: #48B879;
+            --green-soft: #123C32;
+            --orange: #E2A83B;
+            --orange-soft: #3A301D;
+            --red: #EF7070;
+            --red-soft: #3B2222;
+            --purple: #A1AEA6;
+            --purple-soft: #29332F;
+            --bg: #0F1513;
+            --white: #18201D;
+            --text: #E8EFEC;
+            --muted: #AAB9B3;
+            --light: #879A92;
+            --border: #2B3B35;
+        }
+
+        body.dark-mode .topbar {
+            background: #151D1A;
+        }
+
+        body.dark-mode .notification,
+        body.dark-mode .theme-toggle {
+            background: #18211E;
+            color: #7FD4B0;
+            border-color: var(--border);
+        }
+
+        body.dark-mode .theme-toggle .sun-icon {
+            display: none;
+        }
+
+        body.dark-mode .theme-toggle .moon-icon {
+            display: inline;
+        }
+
+        body.dark-mode .panel,
+        body.dark-mode .stat-card,
+        body.dark-mode .form-panel,
+        body.dark-mode .report-card {
+            background: #18201D;
+        }
+
+        body.dark-mode .panel-top,
+        body.dark-mode .filters {
+            border-color: var(--border);
+        }
+
+        body.dark-mode th {
+            background: #202A26;
+            color: #AAB9B3;
+            border-color: var(--border);
+        }
+
+        body.dark-mode td {
+            color: #AAB9B3;
+            border-color: #293731;
+        }
+
+        body.dark-mode .search input,
+        body.dark-mode .filter-select,
+        body.dark-mode .field input,
+        body.dark-mode .field select {
+            background: #121916;
+            color: #E8EFEC;
+            border-color: var(--border);
+        }
+
+        body.dark-mode .search input::placeholder,
+        body.dark-mode .field input::placeholder {
+            color: #71837B;
+        }
+
+        body.dark-mode .info-panel {
+            background: #12352A;
+            border-color: #285143;
+        }
+
+        body.dark-mode .info-icon {
+            background: #EAF7F1;
+            color: #15915F;
+        }
+
+        body.dark-mode .support {
+            background: rgba(255,255,255,.035);
+            border-color: rgba(255,255,255,.08);
+        }
+
+        body.dark-mode .date-box {
+            background: #18201D;
+            border-color: var(--border);
+        }
+
+        body.dark-mode .medicine-name,
+        body.dark-mode .medicine-sub,
+        body.dark-mode .hero h1,
+        body.dark-mode .panel-top h3,
+        body.dark-mode .stat-info strong,
+        body.dark-mode .form-panel h3,
+        body.dark-mode .report-card h3 {
+            color: #E8EFEC;
+        }
+
+        body.dark-mode .toast {
+            background: #12352A;
+        }
+
+        body.dark-mode .empty-state {
+            color: #AAB9B3;
+        }
+
+
+
+        /* =====================================================
+           FINAL DARK MODE READABILITY FIX
+           Keeps text visible inside every dashboard card,
+           inventory row, hover state and alert panel.
+        ====================================================== */
+
+        body.dark-mode .card,
+        body.dark-mode .stat-card,
+        body.dark-mode .summary-card,
+        body.dark-mode .report-card,
+        body.dark-mode .inventory-card,
+        body.dark-mode .alert-card,
+        body.dark-mode .panel,
+        body.dark-mode .table-card {
+            background: #121C18 !important;
+            color: #E8EFEC !important;
+            border-color: #29443A !important;
+        }
+
+        body.dark-mode .card h1,
+        body.dark-mode .card h2,
+        body.dark-mode .card h3,
+        body.dark-mode .card h4,
+        body.dark-mode .card strong,
+        body.dark-mode .stat-card strong,
+        body.dark-mode .summary-card strong,
+        body.dark-mode .report-card strong,
+        body.dark-mode .inventory-card strong,
+        body.dark-mode .alert-card strong,
+        body.dark-mode .panel h1,
+        body.dark-mode .panel h2,
+        body.dark-mode .panel h3,
+        body.dark-mode .panel h4 {
+            color: #E8EFEC !important;
+        }
+
+        body.dark-mode .card p,
+        body.dark-mode .card span,
+        body.dark-mode .card small,
+        body.dark-mode .summary-card p,
+        body.dark-mode .summary-card span,
+        body.dark-mode .summary-card small,
+        body.dark-mode .report-card p,
+        body.dark-mode .report-card span,
+        body.dark-mode .report-card small,
+        body.dark-mode .inventory-card p,
+        body.dark-mode .inventory-card span,
+        body.dark-mode .inventory-card small,
+        body.dark-mode .alert-card p,
+        body.dark-mode .alert-card span,
+        body.dark-mode .alert-card small {
+            color: #AAB9B3 !important;
+        }
+
+        body.dark-mode table,
+        body.dark-mode tbody,
+        body.dark-mode tr,
+        body.dark-mode td {
+            background: #121C18 !important;
+            color: #DCE7E2 !important;
+        }
+
+        body.dark-mode th {
+            background: #193027 !important;
+            color: #DCE7E2 !important;
+            border-color: #29443A !important;
+        }
+
+        body.dark-mode tbody tr:hover,
+        body.dark-mode .inventory-row:hover,
+        body.dark-mode .medicine-row:hover {
+            background: #1B3028 !important;
+            color: #F1F7F4 !important;
+        }
+
+        body.dark-mode tbody tr:hover td,
+        body.dark-mode .inventory-row:hover td,
+        body.dark-mode .medicine-row:hover td {
+            color: #F1F7F4 !important;
+        }
+
+        body.dark-mode input,
+        body.dark-mode select,
+        body.dark-mode textarea {
+            background: #101A16 !important;
+            color: #E8EFEC !important;
+            border-color: #315047 !important;
+        }
+
+        body.dark-mode input::placeholder,
+        body.dark-mode textarea::placeholder {
+            color: #7F948C !important;
+        }
+
+        body.dark-mode .stock-alert,
+        body.dark-mode .alert-item,
+        body.dark-mode .attention-item,
+        body.dark-mode .stock-item {
+            background: #17241F !important;
+            color: #DCE7E2 !important;
+            border-color: #29443A !important;
+        }
+
+        body.dark-mode .stock-alert * ,
+        body.dark-mode .alert-item * ,
+        body.dark-mode .attention-item * ,
+        body.dark-mode .stock-item * {
+            color: inherit;
+        }
+
+        body.dark-mode .breadcrumb strong,
+        body.dark-mode .card-label,
+        body.dark-mode .section-label,
+        body.dark-mode .date-box i {
+            color: #36A98A !important;
+        }
+
+        body.dark-mode .primary-button,
+        body.dark-mode .save-button {
+            background: #0F766E !important;
+            color: #FFFFFF !important;
+        }
+
+        body.dark-mode .primary-button:hover,
+        body.dark-mode .save-button:hover {
+            background: #0B5F58 !important;
+        }
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+
+                <i class="bi bi-capsule"></i>
+
+            </div>
+
+
+            <div class="brand-name">
+
+                <strong>MediCare</strong>
+
+                <span>PHARMACY</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="menu-title">
+            OVERVIEW
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a
+                href="#dashboard"
+                class="menu-link active"
+                data-section="dashboard"
+            >
+
+                <i class="bi bi-grid"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a
+                href="#medicines"
+                class="menu-link"
+                data-section="medicines"
+            >
+
+                <i class="bi bi-capsule-pill"></i>
+
+                <span>Medicines</span>
+
+            </a>
+
+
+            <a
+                href="#orders"
+                class="menu-link"
+                data-section="orders"
+            >
+
+                <i class="bi bi-receipt"></i>
+
+                <span>Orders</span>
+
+            </a>
+
+
+            <a
+                href="#reports"
+                class="menu-link"
+                data-section="reports"
+            >
+
+                <i class="bi bi-pie-chart"></i>
+
+                <span>Reports</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="menu-title">
+            MANAGEMENT
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a
+                href="#addMedicine"
+                class="menu-link"
+                data-section="addMedicine"
+            >
+
+                <i class="bi bi-plus-square"></i>
+
+                <span>Add Medicine</span>
+
+            </a>
+
+
+            <a
+                href="#medicines"
+                class="menu-link"
+                data-section="medicines"
+            >
+
+                <i class="bi bi-box-seam"></i>
+
+                <span>Inventory</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-space"></div>
+
+
+        <div class="support">
+
+            <div class="support-icon">
+
+                <i class="bi bi-headset"></i>
+
+            </div>
+
+
+            <div>
+
+                <strong>Need assistance?</strong>
+
+                <span>Contact support</span>
+
+            </div>
+
+        </div>
+
+
+        <a
+            href="/logout/"
+            class="logout"
+        >
+
+            <i class="bi bi-box-arrow-left"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+
+            <div class="top-right">
+
+            <button
+                type="button"
+                id="themeToggle"
+                class="theme-toggle"
+                title="Switch to dark mode"
+                aria-label="Switch to dark mode"
+            >
+                <i class="bi bi-sun sun-icon"></i>
+                <i class="bi bi-moon moon-icon"></i>
+            </button>
+
+
+                <div class="notification">
+
+                    <i class="bi bi-bell"></i>
+
+                </div>
+
+
+                <div class="divider"></div>
+
+
+                <div class="profile">
+
+
+                    <div class="avatar">
+
+                        {{ request.user.username|slice:":1"|upper }}
+
+                    </div>
+
+
+                    <div class="profile-text">
+
+                        <strong>
+                            {{ request.user.username }}
+                        </strong>
+
+                        <span>
+                            System Admin
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <div class="content">
+
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
+
+            <section
+                class="page-section active"
+                id="section-dashboard"
+            >
+
+
+                <div class="hero">
+
+
+                    <div>
+
+                        <div class="breadcrumb">
+
+                            <span>Home</span>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                            <strong>Dashboard</strong>
+
+                        </div>
+
+
+                        <h1>
+                            Dashboard
+                        </h1>
+
+
+                        <p>
+                            Welcome back, Admin. Here's your pharmacy overview.
+                        </p>
+
+                    </div>
+
+
+                    <div class="date-box">
+
+                        <i class="bi bi-calendar3"></i>
+
+                        <div>
+
+                            <small>TODAY</small>
+
+                            <strong id="dashboardDate"></strong>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="stats">
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon blue">
+
+                            <i class="bi bi-capsule"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Total Medicines</span>
+
+                            <strong>
+                                {{ total_medicines }}
+                            </strong>
+
+                            <small>Medicines in inventory</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon orange">
+
+                            <i class="bi bi-exclamation-circle"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Low Stock</span>
+
+                            <strong>
+                                {{ low_stock_medicines }}
+                            </strong>
+
+                            <small>Requires attention</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon purple">
+
+                            <i class="bi bi-receipt"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Total Orders</span>
+
+                            <strong>
+                                {{ total_orders }}
+                            </strong>
+
+                            <small>Customer orders</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green">
+
+                            <i class="bi bi-currency-rupee"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Delivered Sales</span>
+
+                            <strong>
+                                ₹{{ approved_sales }}
+                            </strong>
+
+                            <small>Completed sales</small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="stats">
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon orange">
+
+                            <i class="bi bi-clock"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Pending Orders</span>
+
+                            <strong>
+                                {{ pending_orders }}
+                            </strong>
+
+                            <small>Waiting for approval</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green">
+
+                            <i class="bi bi-wallet2"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Inventory Value</span>
+
+                            <strong>
+                                ₹{{ inventory_value }}
+                            </strong>
+
+                            <small>Current stock value</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon blue">
+
+                            <i class="bi bi-bag-check"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Sold Count</span>
+
+                            <strong>
+                                {{ approved_count }}
+                            </strong>
+
+                            <small>Approved medicine count</small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon red">
+
+                            <i class="bi bi-calendar-x"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>Expired Medicines</span>
+
+                            <strong>
+                                {{ expired_medicines }}
+                            </strong>
+
+                            <small>Requires attention</small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- OVERVIEW -->
+
+                <div class="overview-grid">
+
+
+                    <div class="overview-card">
+
+                        <div class="card-label">
+                            PERFORMANCE
+                        </div>
+
+                        <h2>
+                            Pharmacy Summary
+                        </h2>
+
+                        <p>
+                            Current business overview
+                        </p>
+
+
+                        <div class="metric-row">
+
+                            <div class="metric-name">
+
+                                <span class="dot blue-dot"></span>
+
+                                Total Orders
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ total_orders }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-row">
+
+                            <div class="metric-name">
+
+                                <span class="dot green-dot"></span>
+
+                                Delivered Orders
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ approved_orders }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-row">
+
+                            <div class="metric-name">
+
+                                <span class="dot orange-dot"></span>
+
+                                Pending Orders
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ pending_orders }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-row">
+
+                            <div class="metric-name">
+
+                                <span class="dot red-dot"></span>
+
+                                Rejected Orders
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ rejected_orders }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-card">
+
+                        <div class="card-label">
+                            INVENTORY
+                        </div>
+
+                        <h2>
+                            Inventory Health
+                        </h2>
+
+                        <p>
+                            Stock condition overview
+                        </p>
+
+
+                        <div class="metric-row">
+
+                            <div class="metric-name">
+
+                                <span class="dot green-dot"></span>
+
+                                Active Medicines
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ total_medicines|add:"-"|add:expired_medicines }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-row">
+
+                            <div class="metric-name">
+
+                                <span class="dot orange-dot"></span>
+
+                                Low Stock
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ low_stock_medicines }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-row">
+
+                            <div class="metric-name">
+
+                                <span class="dot red-dot"></span>
+
+                                Expired
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ expired_medicines }}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="metric-row">
+
+                            <div class="metric-name">
+
+                                <span class="dot blue-dot"></span>
+
+                                Expiring Soon
+
+                            </div>
+
+                            <div class="metric-value">
+
+                                {{ expiring_soon_medicines }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="overview-card">
+
+                        <div class="card-label">
+                            ATTENTION
+                        </div>
+
+                        <h2>
+                            Stock Alerts
+                        </h2>
+
+                        <p>
+                            Items requiring attention
+                        </p>
+
+
+                        <div class="alert-item">
+
+                            <div class="alert-icon orange">
+
+                                <i class="bi bi-box"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Low Stock
+                                </strong>
+
+                                <span>
+                                    {{ low_stock_medicines }} medicine(s) need restocking
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="alert-item">
+
+                            <div class="alert-icon red">
+
+                                <i class="bi bi-calendar-x"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Expired
+                                </strong>
+
+                                <span>
+                                    {{ expired_medicines }} expired medicine(s)
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="alert-item">
+
+                            <div class="alert-icon orange">
+
+                                <i class="bi bi-calendar-event"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Expiring Soon
+                                </strong>
+
+                                <span>
+                                    {{ expiring_soon_medicines }} medicine(s) within 30 days
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 MEDICINES / INVENTORY
+            ================================================== -->
+
+            <section
+                class="page-section"
+                id="section-medicines"
+            >
+
+
+                <div class="section-heading">
+
+
+                    <div>
+
+                        <div class="breadcrumb">
+
+                            <span>Home</span>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                            <strong>Medicines</strong>
+
+                        </div>
+
+
+                        <h2>
+                            Medicine Inventory
+                        </h2>
+
+
+                        <p>
+                            Manage medicines, stock levels and expiry dates.
+                        </p>
+
+                    </div>
+
+
+                    <div class="heading-actions">
+
+
+                        <button
+                            class="primary-button"
+                            data-section="addMedicine"
+                        >
+
+                            <i class="bi bi-plus-lg"></i>
+
+                            Add Medicine
+
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="panel">
+
+
+                    <div class="panel-top">
+
+                        <div>
+
+                            <h3>
+                                Inventory
+                            </h3>
+
+                            <p>
+                                View and manage all medicines currently available.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="filters">
+
+
+                        <div class="search">
+
+                            <i class="bi bi-search"></i>
+
+                            <input
+                                type="text"
+                                id="inventorySearch"
+                                placeholder="Search medicine..."
+                            >
+
+                        </div>
+
+
+                        <select
+                            class="filter-select"
+                            id="inventoryCategory"
+                        >
+
+                            <option value="all">
+                                All Categories
+                            </option>
+
+                        </select>
+
+
+                    </div>
+
+
+                    <div class="table-wrap">
+
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>S.NO</th>
+
+                                    <th>MEDICINE</th>
+
+                                    <th>CATEGORY</th>
+
+                                    <th>MANUFACTURE DATE</th>
+
+                                    <th>EXPIRY DATE</th>
+
+                                    <th>PRICE</th>
+
+                                    <th>COUNT</th>
+
+                                    <th>STATUS</th>
+
+                                    <th>ACTIONS</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="inventoryBody">
+
+
+                                {% for medicine in medicines %}
+
+                                <tr
+                                    class="inventory-row"
+                                    data-name="{{ medicine.name|lower }}"
+                                    data-category="{{ medicine.category|lower }}"
+                                >
+
+                                    <td>
+                                        {{ forloop.counter }}
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="medicine-cell">
+
+                                            <div class="medicine-icon">
+
+                                                <i class="bi bi-capsule"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    {{ medicine.name }}
+                                                </strong>
+
+                                                <span>
+                                                    Medicine
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ medicine.category }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ medicine.manufacture_date|date:"d M Y" }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ medicine.expiry_date|date:"d M Y" }}
+                                    </td>
+
+
+                                    <td class="table-price">
+                                        ₹{{ medicine.price }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ medicine.count }}
+                                    </td>
+
+
+                                    <td>
+
+
+                                        {% if medicine.expiry_date < today %}
+
+                                        <span class="status expired">
+
+                                            <i class="bi bi-circle-fill"></i>
+
+                                            Expired
+
+                                        </span>
+
+
+                                        {% elif medicine.expiry_date <= expiry_limit %}
+
+                                        <span class="status expiring">
+
+                                            <i class="bi bi-circle-fill"></i>
+
+                                            Expiring Soon
+
+                                        </span>
+
+
+                                        {% else %}
+
+                                        <span class="status active">
+
+                                            <i class="bi bi-circle-fill"></i>
+
+                                            Active
+
+                                        </span>
+
+                                        {% endif %}
+
+
+                                    </td>
+
+
+                                    <td>
+
+                                        <div class="actions">
+
+
+                                            <a
+                                                href="/edit-medicine-page/{{ medicine.id }}/"
+                                                class="action edit"
+                                                title="Edit"
+                                            >
+
+                                                <i class="bi bi-pencil"></i>
+
+                                            </a>
+
+
+                                            <button
+                                                type="button"
+                                                class="action delete delete-medicine"
+                                                data-id="{{ medicine.id }}"
+                                                title="Delete"
+                                            >
+
+                                                <i class="bi bi-trash3"></i>
+
+                                            </button>
+
+
+                                        </div>
+
+                                    </td>
+
+
+                                </tr>
+
+
+                                {% empty %}
+
+
+                                <tr>
+
+                                    <td colspan="9">
+
+                                        <div class="empty">
+
+                                            <i class="bi bi-capsule"></i>
+
+                                            <strong>
+                                                No medicines available
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+
+                                {% endfor %}
+
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 ORDERS
+            ================================================== -->
+
+            <section
+                class="page-section"
+                id="section-orders"
+            >
+
+
+                <div class="section-heading">
+
+
+                    <div>
+
+                        <div class="breadcrumb">
+
+                            <span>Home</span>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                            <strong>Orders</strong>
+
+                        </div>
+
+
+                        <h2>
+                            Customer Orders
+                        </h2>
+
+
+                        <p>
+                            Review and manage customer medicine orders.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="panel">
+
+
+                    <div class="panel-top">
+
+                        <div>
+
+                            <h3>
+                                Order Management
+                            </h3>
+
+                            <p>
+                                Approve or reject pending customer orders.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="filters">
+
+
+                        <div class="search">
+
+                            <i class="bi bi-search"></i>
+
+                            <input
+                                type="text"
+                                id="orderSearch"
+                                placeholder="Search by username or medicine..."
+                            >
+
+                        </div>
+
+
+                        <select
+                            class="filter-select"
+                            id="orderStatusFilter"
+                        >
+
+                            <option value="all">
+                                All Status
+                            </option>
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="Delivered">
+                                Delivered
+                            </option>
+
+                            <option value="Rejected">
+                                Rejected
+                            </option>
+
+                        </select>
+
+
+                    </div>
+
+
+                    <div class="table-wrap">
+
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>USER</th>
+
+                                    <th>MEDICINE</th>
+
+                                    <th>COUNT</th>
+
+                                    <th>PRICE</th>
+
+                                    <th>TOTAL</th>
+
+                                    <th>ORDER DATE</th>
+
+                                    <th>STATUS</th>
+
+                                    <th>ACTION</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="ordersBody">
+
+
+                                {% for order in orders %}
+
+                                <tr
+                                    class="order-row"
+                                    data-user="{{ order.user.username|lower }}"
+                                    data-medicine="{{ order.medicine.name|lower }}"
+                                    data-status="{{ order.status }}"
+                                >
+
+
+                                    <td>
+
+                                        <div class="medicine-cell">
+
+                                            <div class="medicine-icon">
+
+                                                <i class="bi bi-person"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <strong>
+                                                    {{ order.user.username }}
+                                                </strong>
+
+                                                <span>
+                                                    Customer
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <td>
+                                        {{ order.medicine.name }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ order.count }}
+                                    </td>
+
+
+                                    <td class="table-price">
+                                        ₹{{ order.medicine.price }}
+                                    </td>
+
+
+                                    <td class="table-price">
+                                        ₹{{ order.total_price }}
+                                    </td>
+
+
+                                    <td>
+                                        {{ order.order_date|date:"d M Y, h:i A" }}
+                                    </td>
+
+
+                                    <td>
+
+
+                                        {% if order.status == "Pending" %}
+
+                                        <span class="status pending">
+
+                                            <i class="bi bi-circle-fill"></i>
+
+                                            Pending
+
+                                        </span>
+
+
+                                        {% elif order.status == "In Progress" %}
+
+                                        <span class="status approved">
+
+                                            <i class="bi bi-circle-fill"></i>
+
+                                            In Progress
+
+                                        </span>
+
+
+                                        {% elif order.status == "Delivered" %}
+
+                                        <span class="status active">
+
+                                            <i class="bi bi-circle-fill"></i>
+
+                                            Delivered
+
+                                        </span>
+
+
+                                        {% elif order.status == "Rejected" %}
+
+                                        <span class="status rejected">
+
+                                            <i class="bi bi-circle-fill"></i>
+
+                                            Rejected
+
+                                        </span>
+
+
+                                        {% else %}
+
+                                        <span class="status pending">
+
+                                            <i class="bi bi-circle-fill"></i>
+
+                                            Pending
+
+                                        </span>
+
+                                        {% endif %}
+
+
+                                    </td>
+
+
+                                    <td>
+
+
+                                        {% if order.status == "Pending" %}
+
+                                        <div class="actions">
+
+                                            <button
+                                                type="button"
+                                                class="action approve update-order"
+                                                data-id="{{ order.id }}"
+                                                data-status="In Progress"
+                                                title="Move to In Progress"
+                                            >
+                                                <i class="bi bi-play-fill"></i>
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="action reject update-order"
+                                                data-id="{{ order.id }}"
+                                                data-status="Rejected"
+                                                title="Reject"
+                                            >
+
+                                                <i class="bi bi-x-lg"></i>
+
+                                            </button>
+
+
+                                        </div>
+
+
+                                        {% elif order.status == "In Progress" %}
+
+                                        <div class="actions">
+                                            <button
+                                                type="button"
+                                                class="action approve update-order"
+                                                data-id="{{ order.id }}"
+                                                data-status="Delivered"
+                                                title="Mark as Delivered"
+                                            >
+                                                <i class="bi bi-check-lg"></i>
+                                            </button>
+                                        </div>
+
+                                        {% else %}
+
+                                        <span
+                                            style="
+                                            color:#7A8790;
+                                            font-size:8px;
+                                            "
+                                        >
+                                            No further action
+                                        </span>
+
+                                        {% endif %}
+
+
+                                    </td>
+
+
+                                </tr>
+
+
+                                {% empty %}
+
+
+                                <tr>
+
+                                    <td colspan="8">
+
+                                        <div class="empty">
+
+                                            <i class="bi bi-receipt"></i>
+
+                                            <strong>
+                                                No customer orders yet
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+
+                                {% endfor %}
+
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 REPORTS
+            ================================================== -->
+
+            <section
+                class="page-section"
+                id="section-reports"
+            >
+
+
+                <div class="section-heading">
+
+
+                    <div>
+
+                        <div class="breadcrumb">
+
+                            <span>Home</span>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                            <strong>Reports</strong>
+
+                        </div>
+
+
+                        <h2>
+                            Pharmacy Reports
+                        </h2>
+
+
+                        <p>
+                            Business, sales and inventory performance overview.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="report-grid">
+
+
+                    <div class="report-card">
+
+                        <div class="card-label">
+                            SALES
+                        </div>
+
+                        <h3>
+                            Delivered Sales
+                        </h3>
+
+                        <p>
+                            Revenue generated from approved orders.
+                        </p>
+
+
+                        <div class="big-number">
+                            ₹{{ approved_sales }}
+                        </div>
+
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width:100%;"
+                            ></div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="report-card">
+
+                        <div class="card-label">
+                            INVENTORY
+                        </div>
+
+                        <h3>
+                            Inventory Value
+                        </h3>
+
+                        <p>
+                            Estimated value of medicines currently in stock.
+                        </p>
+
+
+                        <div class="big-number">
+                            ₹{{ inventory_value }}
+                        </div>
+
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width:100%;"
+                            ></div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="report-card">
+
+                        <div class="card-label">
+                            ORDER PERFORMANCE
+                        </div>
+
+                        <h3>
+                            Order Statistics
+                        </h3>
+
+                        <p>
+                            Current customer order breakdown.
+                        </p>
+
+
+                        <div class="report-stat">
+
+                            <span>Total Orders</span>
+
+                            <strong>
+                                {{ total_orders }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-stat">
+
+                            <span>Approved</span>
+
+                            <strong>
+                                {{ approved_orders }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-stat">
+
+                            <span>Pending</span>
+
+                            <strong>
+                                {{ pending_orders }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-stat">
+
+                            <span>Rejected</span>
+
+                            <strong>
+                                {{ rejected_orders }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="report-card">
+
+                        <div class="card-label">
+                            INVENTORY HEALTH
+                        </div>
+
+                        <h3>
+                            Stock Statistics
+                        </h3>
+
+                        <p>
+                            Medicine availability and expiry overview.
+                        </p>
+
+
+                        <div class="report-stat">
+
+                            <span>Total Medicines</span>
+
+                            <strong>
+                                {{ total_medicines }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-stat">
+
+                            <span>Low Stock</span>
+
+                            <strong>
+                                {{ low_stock_medicines }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-stat">
+
+                            <span>Expired</span>
+
+                            <strong>
+                                {{ expired_medicines }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="report-stat">
+
+                            <span>Expiring Soon</span>
+
+                            <strong>
+                                {{ expiring_soon_medicines }}
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+            <!-- =================================================
+                 ADD MEDICINE
+            ================================================== -->
+
+            <section
+                class="page-section"
+                id="section-addMedicine"
+            >
+
+
+                <div class="section-heading">
+
+
+                    <div>
+
+                        <div class="breadcrumb">
+
+                            <span>Home</span>
+
+                            <i class="bi bi-chevron-right"></i>
+
+                            <strong>Add Medicine</strong>
+
+                        </div>
+
+
+                        <h2>
+                            Add New Medicine
+                        </h2>
+
+
+                        <p>
+                            Add a medicine directly to your pharmacy inventory.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="secondary-button"
+                        data-section="medicines"
+                    >
+
+                        <i class="bi bi-arrow-left"></i>
+
+                        View Inventory
+
+                    </button>
+
+
+                </div>
+
+
+                <div class="add-layout">
+
+
+                    <div class="form-panel">
+
+
+                        <div class="card-label">
+                            MEDICINE DETAILS
+                        </div>
+
+
+                        <h3
+                            style="
+                            font-size:18px;
+                            margin-bottom:5px;
+                            "
+                        >
+                            Medicine Information
+                        </h3>
+
+
+                        <p
+                            style="
+                            color:#7A8790;
+                            font-size:9px;
+                            margin-bottom:22px;
+                            "
+                        >
+                            Enter the medicine details below.
+                        </p>
+
+
+                        <div class="form-grid">
+
+
+                            <div class="field">
+
+                                <label>
+                                    Medicine Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="addName"
+                                    placeholder="Enter medicine name"
+                                >
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label>
+                                    Category
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="addCategory"
+                                    placeholder="e.g. Painkiller"
+                                >
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label>
+                                    Manufacture Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="addManufactureDate"
+                                >
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label>
+                                    Expiry Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="addExpiryDate"
+                                >
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label>
+                                    Price
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="addPrice"
+                                    placeholder="0.00"
+                                    min="0"
+                                    step="0.01"
+                                >
+
+                            </div>
+
+
+                            <div class="field">
+
+                                <label>
+                                    Count
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="addCount"
+                                    placeholder="Enter medicine count"
+                                    min="0"
+                                >
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+
+                            <button
+                                type="button"
+                                class="primary-button"
+                                id="saveMedicineButton"
+                            >
+
+                                <i class="bi bi-check-lg"></i>
+
+                                Add Medicine
+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="secondary-button"
+                                data-section="dashboard"
+                            >
+
+                                Cancel
+
+                            </button>
+
+
+                        </div>
+
+
+                        <div
+                            class="form-message"
+                            id="addMedicineMessage"
+                        ></div>
+
+
+                    </div>
+
+
+                    <div class="info-panel">
+
+
+                        <div class="info-icon">
+
+                            <i class="bi bi-shield-check"></i>
+
+                        </div>
+
+
+                        <h3>
+                            Inventory Guidelines
+                        </h3>
+
+
+                        <p>
+                            Make sure the medicine information is accurate before adding it to the pharmacy inventory.
+                        </p>
+
+
+                        <div class="info-list">
+
+
+                            <div>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Use the correct medicine name.
+
+                            </div>
+
+
+                            <div>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Select accurate manufacture and expiry dates.
+
+                            </div>
+
+
+                            <div>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Enter the current available Count.
+
+                            </div>
+
+
+                            <div>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Enter the correct selling price.
+
+                            </div>
+
+
+                            <div>
+
+                                <i class="bi bi-check-circle"></i>
+
+                                Expiry date must be after manufacture date.
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <i
+        id="toastIcon"
+        class="bi bi-check-circle"
+    ></i>
+
+    <span id="toastText"></span>
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   LIGHT / DARK MODE
+========================================================= */
+
+const themeToggle = document.getElementById("themeToggle");
+
+function applyTheme(theme) {
+
+    if (theme === "dark") {
+
+        document.body.classList.add("dark-mode");
+
+        if (themeToggle) {
+            themeToggle.title = "Switch to light mode";
+            themeToggle.setAttribute("aria-label", "Switch to light mode");
+        }
+
+    } else {
+
+        document.body.classList.remove("dark-mode");
+
+        if (themeToggle) {
+            themeToggle.title = "Switch to dark mode";
+            themeToggle.setAttribute("aria-label", "Switch to dark mode");
+        }
+    }
+}
+
+const savedTheme = localStorage.getItem("medicare-theme");
+applyTheme(savedTheme === "dark" ? "dark" : "light");
+
+if (themeToggle) {
+
+    themeToggle.addEventListener("click", function () {
+
+        const isDark = document.body.classList.contains("dark-mode");
+        const nextTheme = isDark ? "light" : "dark";
+
+        applyTheme(nextTheme);
+        localStorage.setItem("medicare-theme", nextTheme);
+    });
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+const dashboardDate =
+    document.getElementById(
+        "dashboardDate"
+    );
+
+
+if (dashboardDate) {
+
+    dashboardDate.textContent =
+        new Date().toLocaleDateString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+}
+
+
+/* =========================================================
+   SECTION NAVIGATION
+========================================================= */
+
+const menuLinks =
+    document.querySelectorAll(
+        "[data-section]"
+    );
+
+
+const sections =
+    document.querySelectorAll(
+        ".page-section"
+    );
+
+
+function showSection(sectionName) {
+
+
+    sections.forEach(section => {
+
+        section.classList.remove(
+            "active"
+        );
+
+    });
+
+
+    const target =
+        document.getElementById(
+            "section-" + sectionName
+        );
+
+
+    if (target) {
+
+        target.classList.add(
+            "active"
+        );
+
+    }
+
+
+    document
+        .querySelectorAll(
+            ".menu-link"
+        )
+        .forEach(link => {
+
+            link.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(
+            `.menu-link[data-section="${sectionName}"]`
+        )
+        .forEach(link => {
+
+            link.classList.add(
+                "active"
+            );
+
+        });
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+
+    history.replaceState(
+        null,
+        "",
+        "#" + sectionName
+    );
+
+}
+
+
+menuLinks.forEach(link => {
+
+    link.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            const section =
+                this.dataset.section;
+
+            showSection(section);
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   LOAD SECTION FROM URL
+========================================================= */
+
+const startingSection =
+    window.location.hash
+        ? window.location.hash.substring(1)
+        : "dashboard";
+
+
+if (
+    document.getElementById(
+        "section-" + startingSection
+    )
+) {
+
+    showSection(
+        startingSection
+    );
+
+} else {
+
+    showSection(
+        "dashboard"
+    );
+
+}
+
+
+/* =========================================================
+   INVENTORY SEARCH
+========================================================= */
+
+const inventorySearch =
+    document.getElementById(
+        "inventorySearch"
+    );
+
+
+const inventoryCategory =
+    document.getElementById(
+        "inventoryCategory"
+    );
+
+
+const inventoryRows =
+    document.querySelectorAll(
+        ".inventory-row"
+    );
+
+
+const inventoryCategories =
+    new Set();
+
+
+inventoryRows.forEach(row => {
+
+    if (row.dataset.category) {
+
+        inventoryCategories.add(
+            row.dataset.category
+        );
+
+    }
+
+});
+
+
+inventoryCategories.forEach(category => {
+
+    const option =
+        document.createElement(
+            "option"
+        );
+
+    option.value =
+        category;
+
+    option.textContent =
+        category.charAt(0).toUpperCase()
+        +
+        category.slice(1);
+
+    inventoryCategory.appendChild(
+        option
+    );
+
+});
+
+
+function filterInventory() {
+
+    const search =
+        inventorySearch.value
+            .toLowerCase()
+            .trim();
+
+
+    const category =
+        inventoryCategory.value;
+
+
+    inventoryRows.forEach(row => {
+
+        const name =
+            row.dataset.name || "";
+
+
+        const rowCategory =
+            row.dataset.category || "";
+
+
+        const matchesName =
+            name.includes(search);
+
+
+        const matchesCategory =
+            category === "all"
+            ||
+            rowCategory === category;
+
+
+        row.style.display =
+            matchesName &&
+            matchesCategory
+                ? ""
+                : "none";
+
+    });
+
+}
+
+
+if (inventorySearch) {
+
+    inventorySearch.addEventListener(
+        "input",
+        filterInventory
+    );
+
+}
+
+
+if (inventoryCategory) {
+
+    inventoryCategory.addEventListener(
+        "change",
+        filterInventory
+    );
+
+}
+
+
+/* =========================================================
+   ORDER SEARCH
+========================================================= */
+
+const orderSearch =
+    document.getElementById(
+        "orderSearch"
+    );
+
+
+const orderStatusFilter =
+    document.getElementById(
+        "orderStatusFilter"
+    );
+
+
+const orderRows =
+    document.querySelectorAll(
+        ".order-row"
+    );
+
+
+function filterOrders() {
+
+    const search =
+        orderSearch.value
+            .toLowerCase()
+            .trim();
+
+
+    const status =
+        orderStatusFilter.value;
+
+
+    orderRows.forEach(row => {
+
+
+        const user =
+            row.dataset.user || "";
+
+
+        const medicine =
+            row.dataset.medicine || "";
+
+
+        const rowStatus =
+            row.dataset.status || "";
+
+
+        const matchesSearch =
+            user.includes(search)
+            ||
+            medicine.includes(search);
+
+
+        const matchesStatus =
+            status === "all"
+            ||
+            rowStatus === status;
+
+
+        row.style.display =
+            matchesSearch &&
+            matchesStatus
+                ? ""
+                : "none";
+
+    });
+
+}
+
+
+if (orderSearch) {
+
+    orderSearch.addEventListener(
+        "input",
+        filterOrders
+    );
+
+}
+
+
+if (orderStatusFilter) {
+
+    orderStatusFilter.addEventListener(
+        "change",
+        filterOrders
+    );
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message,
+    type = "success"
+) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    const text =
+        document.getElementById(
+            "toastText"
+        );
+
+
+    const icon =
+        document.getElementById(
+            "toastIcon"
+        );
+
+
+    text.textContent =
+        message;
+
+
+    toast.classList.remove(
+        "success",
+        "error"
+    );
+
+
+    toast.classList.add(
+        type
+    );
+
+
+    if (type === "success") {
+
+        icon.className =
+            "bi bi-check-circle";
+
+    } else {
+
+        icon.className =
+            "bi bi-exclamation-circle";
+
+    }
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        3000
+    );
+
+}
+
+
+/* =========================================================
+   CSRF
+========================================================= */
+
+function getCookie(name) {
+
+    let cookieValue = null;
+
+
+    if (
+        document.cookie
+        &&
+        document.cookie !== ""
+    ) {
+
+        const cookies =
+            document.cookie.split(";");
+
+
+        for (
+            let cookie of cookies
+        ) {
+
+            cookie =
+                cookie.trim();
+
+
+            if (
+                cookie.startsWith(
+                    name + "="
+                )
+            ) {
+
+                cookieValue =
+                    decodeURIComponent(
+                        cookie.substring(
+                            name.length + 1
+                        )
+                    );
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    return cookieValue;
+
+}
+
+
+/* =========================================================
+   ADD MEDICINE
+========================================================= */
+
+const saveMedicineButton =
+    document.getElementById(
+        "saveMedicineButton"
+    );
+
+
+if (saveMedicineButton) {
+
+
+    saveMedicineButton.addEventListener(
+        "click",
+        function() {
+
+
+            const name =
+                document.getElementById(
+                    "addName"
+                ).value.trim();
+
+
+            const category =
+                document.getElementById(
+                    "addCategory"
+                ).value.trim();
+
+
+            const manufactureDate =
+                document.getElementById(
+                    "addManufactureDate"
+                ).value;
+
+
+            const expiryDate =
+                document.getElementById(
+                    "addExpiryDate"
+                ).value;
+
+
+            const price =
+                document.getElementById(
+                    "addPrice"
+                ).value;
+
+
+            const count =
+                document.getElementById(
+                    "addCount"
+                ).value;
+
+
+            const message =
+                document.getElementById(
+                    "addMedicineMessage"
+                );
+
+
+            if (
+                name === ""
+                ||
+                category === ""
+                ||
+                manufactureDate === ""
+                ||
+                expiryDate === ""
+                ||
+                price === ""
+                ||
+                count === ""
+            ) {
+
+                message.textContent =
+                    "Please fill all fields.";
+
+                message.style.color =
+                    "#B83A3A";
+
+                return;
+
+            }
+
+
+            if (
+                expiryDate <=
+                manufactureDate
+            ) {
+
+                message.textContent =
+                    "Expiry date must be after manufacture date.";
+
+                message.style.color =
+                    "#B83A3A";
+
+                return;
+
+            }
+
+
+            saveMedicineButton.disabled =
+                true;
+
+
+            saveMedicineButton.innerHTML =
+                '<i class="bi bi-arrow-repeat"></i> Adding...';
+
+
+            fetch(
+                "/add-medicine/",
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/x-www-form-urlencoded",
+
+                        "X-CSRFToken":
+                            getCookie("csrftoken")
+
+                    },
+
+                    body:
+                        new URLSearchParams({
+
+                            name:
+                                name,
+
+                            category:
+                                category,
+
+                            manufacture_date:
+                                manufactureDate,
+
+                            expiry_date:
+                                expiryDate,
+
+                            price:
+                                price,
+
+                            count:
+                                count
+
+                        })
+
+                }
+            )
+
+
+            .then(response =>
+                response.json()
+            )
+
+
+            .then(data => {
+
+
+                if (data.success) {
+
+
+                    message.textContent =
+                        "Medicine added successfully!";
+
+                    message.style.color =
+                        "#15915F";
+
+
+                    showToast(
+                        "Medicine added successfully!",
+                        "success"
+                    );
+
+
+                    document.getElementById(
+                        "addName"
+                    ).value = "";
+
+
+                    document.getElementById(
+                        "addCategory"
+                    ).value = "";
+
+
+                    document.getElementById(
+                        "addManufactureDate"
+                    ).value = "";
+
+
+                    document.getElementById(
+                        "addExpiryDate"
+                    ).value = "";
+
+
+                    document.getElementById(
+                        "addPrice"
+                    ).value = "";
+
+
+                    document.getElementById(
+                        "addCount"
+                    ).value = "";
+
+
+                    setTimeout(
+                        () => {
+
+                            window.location.reload();
+
+                        },
+                        900
+                    );
+
+
+                } else {
+
+
+                    message.textContent =
+                        data.message;
+
+                    message.style.color =
+                        "#B83A3A";
+
+
+                    saveMedicineButton.disabled =
+                        false;
+
+
+                    saveMedicineButton.innerHTML =
+                        '<i class="bi bi-check-lg"></i> Add Medicine';
+
+                }
+
+            })
+
+
+            .catch(error => {
+
+                console.error(error);
+
+
+                message.textContent =
+                    "Something went wrong.";
+
+                message.style.color =
+                    "#B83A3A";
+
+
+                saveMedicineButton.disabled =
+                    false;
+
+
+                saveMedicineButton.innerHTML =
+                    '<i class="bi bi-check-lg"></i> Add Medicine';
+
+            });
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DELETE MEDICINE
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".delete-medicine"
+    )
+    .forEach(button => {
+
+
+        button.addEventListener(
+            "click",
+            function() {
+
+
+                const medicineId =
+                    this.dataset.id;
+
+
+                fetch(
+                    `/delete-medicine/${medicineId}/`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "X-CSRFToken":
+                                getCookie(
+                                    "csrftoken"
+                                )
+
+                        }
+
+                    }
+                )
+
+
+                .then(response =>
+                    response.json()
+                )
+
+
+                .then(data => {
+
+
+                    if (data.success) {
+
+                        showToast(
+                            "Medicine deleted successfully.",
+                            "success"
+                        );
+
+
+                        setTimeout(
+                            () => {
+
+                                window.location.reload();
+
+                            },
+                            700
+                        );
+
+                    } else {
+
+                        showToast(
+                            data.message,
+                            "error"
+                        );
+
+                    }
+
+                })
+
+
+                .catch(error => {
+
+                    console.error(error);
+
+                    showToast(
+                        "Something went wrong while deleting.",
+                        "error"
+                    );
+
+                });
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   UPDATE ORDER STATUS
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".update-order"
+    )
+    .forEach(button => {
+
+
+        button.addEventListener(
+            "click",
+            function() {
+
+
+                const orderId =
+                    this.dataset.id;
+
+
+                const status =
+                    this.dataset.status;
+
+
+                this.disabled =
+                    true;
+
+
+                fetch(
+                    `/update-order-status/${orderId}/`,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/x-www-form-urlencoded",
+
+                            "X-CSRFToken":
+                                getCookie(
+                                    "csrftoken"
+                                )
+
+                        },
+
+                        body:
+                            new URLSearchParams({
+                                status:
+                                    status
+                            })
+
+                    }
+                )
+
+
+                .then(response =>
+                    response.json()
+                )
+
+
+                .then(data => {
+
+
+                    if (data.success) {
+
+
+                        showToast(
+                            `Order status updated successfully.`,
+                            "success"
+                        );
+
+
+                        setTimeout(
+                            () => {
+
+                                window.location.reload();
+
+                            },
+                            700
+                        );
+
+
+                    } else {
+
+
+                        showToast(
+                            data.message,
+                            "error"
+                        );
+
+
+                        this.disabled =
+                            false;
+
+                    }
+
+                })
+
+
+                .catch(error => {
+
+                    console.error(error);
+
+
+                    showToast(
+                        "Something went wrong.",
+                        "error"
+                    );
+
+
+                    this.disabled =
+                        false;
+
+                });
+
+            }
+        );
+
+    });
+
+
+</script>
+
+
+</body>
+
+</html>

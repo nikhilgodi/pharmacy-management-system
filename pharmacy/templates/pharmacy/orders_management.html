@@ -1,0 +1,2606 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="color-scheme" content="light dark">
+
+    <title>MediCare | Order Management</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           LIGHT THEME
+        ===================================================== */
+
+        :root {
+
+            --sidebar: #0d3b2e;
+            --sidebar-active: #155c48;
+
+            --primary: #15966b;
+            --primary-dark: #0f805b;
+
+            --background: #f5f8f7;
+            --card: #ffffff;
+
+            --text: #12352b;
+            --muted: #667d75;
+
+            --border: #dce6e2;
+
+            --topbar: #ffffff;
+
+            --input-bg: #ffffff;
+
+            --success: #218b5b;
+            --danger: #c03939;
+            --warning: #b7791f;
+
+            --soft-green: #e9f6f1;
+            --soft-red: #fcecec;
+            --soft-orange: #fff5df;
+        }
+
+
+        /* =====================================================
+           DARK THEME
+        ===================================================== */
+
+        body.dark-mode {
+
+            --sidebar: #09271f;
+            --sidebar-active: #104c3b;
+
+            --primary: #20a878;
+            --primary-dark: #179365;
+
+            --background: #0f1715;
+            --card: #17211e;
+
+            --text: #edf6f2;
+            --muted: #9aada6;
+
+            --border: #2b3c36;
+
+            --topbar: #151e1b;
+
+            --input-bg: #111a17;
+
+            --success: #4dc58a;
+            --danger: #ef7070;
+            --warning: #e0aa51;
+
+            --soft-green: #17372d;
+            --soft-red: #3b2222;
+            --soft-orange: #3a301e;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            background: var(--background);
+
+            color: var(--text);
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            transition:
+                background .25s ease,
+                color .25s ease;
+        }
+
+
+        /* =====================================================
+           THEME BUTTON
+        ===================================================== */
+
+        .theme-toggle {
+
+            position: fixed;
+
+            top: 18px;
+
+            right: 25px;
+
+            width: 44px;
+
+            height: 44px;
+
+            border-radius: 50%;
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+
+            color: var(--text);
+
+            cursor: pointer;
+
+            z-index: 1000;
+
+            font-size: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .theme-toggle:hover {
+
+            border-color: var(--primary);
+
+            transform: translateY(-1px);
+        }
+
+
+        .moon {
+            display: none;
+        }
+
+
+        body.dark-mode .sun {
+            display: none;
+        }
+
+
+        body.dark-mode .moon {
+            display: inline;
+        }
+
+
+        /* =====================================================
+           LAYOUT
+        ===================================================== */
+
+        .app {
+
+            min-height: 100vh;
+
+            display: flex;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            width: 255px;
+
+            min-height: 100vh;
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            bottom: 0;
+
+            background: var(--sidebar);
+
+            padding: 28px 18px;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                0 12px 25px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.09);
+        }
+
+
+        .brand-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 12px;
+
+            background: var(--primary);
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 24px;
+
+            font-weight: 800;
+        }
+
+
+        .brand-name strong {
+
+            display: block;
+
+            color: white;
+
+            font-size: 20px;
+
+            font-weight: 800;
+        }
+
+
+        .brand-name span {
+
+            display: block;
+
+            color: #8ba79d;
+
+            font-size: 8px;
+
+            letter-spacing: 2px;
+
+            margin-top: 3px;
+        }
+
+
+        .menu-title {
+
+            color: #76988e;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.5px;
+
+            margin:
+                31px 14px 11px;
+        }
+
+
+        .menu {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+
+        .menu-link {
+
+            height: 46px;
+
+            padding:
+                0 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            color: #92ada4;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: .2s;
+        }
+
+
+        .menu-link:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,.06);
+        }
+
+
+        .menu-link.active {
+
+            color: white;
+
+            background: var(--sidebar-active);
+
+            box-shadow:
+                inset 3px 0 0 var(--primary);
+        }
+
+
+        .menu-icon {
+
+            width: 20px;
+
+            text-align: center;
+
+            font-size: 17px;
+        }
+
+
+        .sidebar-space {
+
+            flex: 1;
+        }
+
+
+        .support {
+
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+
+            border-radius: 11px;
+
+            padding: 15px;
+
+            margin-bottom: 19px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .support-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(21,150,107,.18);
+
+            color: #55d5a6;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .support strong {
+
+            display: block;
+
+            color: white;
+
+            font-size: 10px;
+        }
+
+
+        .support span {
+
+            display: block;
+
+            color: #719087;
+
+            font-size: 8px;
+
+            margin-top: 4px;
+        }
+
+
+        .logout {
+
+            height: 42px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            padding:
+                0 14px;
+
+            color: #91aaa2;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        .logout:hover {
+
+            color: white;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+
+            margin-left: 255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           TOPBAR
+        ===================================================== */
+
+        .topbar {
+
+            height: 74px;
+
+            background: var(--topbar);
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            padding:
+                0 35px;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding:
+                40px 38px 55px;
+        }
+
+
+        .breadcrumb {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .breadcrumb strong {
+
+            color: var(--primary);
+        }
+
+
+        .page-title {
+
+            color: var(--text);
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            letter-spacing: -.7px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .page-description {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ===================================================== */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 16px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .stat-card {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+
+        .stat-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+        }
+
+
+        .stat-icon.green {
+
+            background: var(--soft-green);
+
+            color: var(--primary);
+        }
+
+
+        .stat-icon.orange {
+
+            background: var(--soft-orange);
+
+            color: var(--warning);
+        }
+
+
+        .stat-card span {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 10px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .stat-card strong {
+
+            display: block;
+
+            color: var(--text);
+
+            font-size: 23px;
+        }
+
+
+        /* =====================================================
+           PANEL
+        ===================================================== */
+
+        .panel {
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 13px;
+
+            overflow: hidden;
+        }
+
+
+        .panel-header {
+
+            padding:
+                27px 28px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        .panel-label {
+
+            color: var(--primary);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.4px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .panel-title {
+
+            color: var(--text);
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            margin-bottom: 5px;
+        }
+
+
+        .panel-description {
+
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           FILTERS
+        ===================================================== */
+
+        .filters {
+
+            padding:
+                18px 22px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display: flex;
+
+            gap: 12px;
+        }
+
+
+        .search {
+
+            flex: 1;
+
+            position: relative;
+        }
+
+
+        .search input {
+
+            width: 100%;
+
+            height: 45px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background: var(--input-bg);
+
+            color: var(--text);
+
+            outline: none;
+
+            padding:
+                0 13px;
+
+            font-size: 12px;
+        }
+
+
+        .search input:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(21,150,107,.08);
+        }
+
+
+        .filter-select {
+
+            width: 170px;
+
+            height: 45px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background: var(--input-bg);
+
+            color: var(--text);
+
+            outline: none;
+
+            padding:
+                0 13px;
+
+            font-size: 12px;
+        }
+
+
+        .filter-select:focus {
+
+            border-color: var(--primary);
+        }
+
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-wrap {
+
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 900px;
+        }
+
+
+        th {
+
+            background: var(--background);
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: .6px;
+
+            text-align: left;
+
+            padding:
+                15px 16px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+
+        td {
+
+            padding:
+                17px 16px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            color: var(--text);
+
+            font-size: 12px;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr:last-child td {
+
+            border-bottom: none;
+        }
+
+
+        .medicine-cell {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .medicine-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            flex-shrink: 0;
+
+            border-radius: 9px;
+
+            background: var(--soft-green);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 16px;
+        }
+
+
+        .medicine-cell strong {
+
+            display: block;
+
+            color: var(--text);
+
+            font-size: 12px;
+        }
+
+
+        .medicine-cell span {
+
+            display: block;
+
+            color: var(--muted);
+
+            font-size: 9px;
+
+            margin-top: 2px;
+        }
+
+
+        .table-price {
+
+            color: var(--primary);
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            padding:
+                5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+        }
+
+
+        .status-dot {
+
+            width: 5px;
+
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: currentColor;
+        }
+
+
+        .status.pending {
+
+            color: var(--warning);
+
+            background: var(--soft-orange);
+        }
+
+
+        .status.approved {
+
+            color: var(--success);
+
+            background: var(--soft-green);
+        }
+
+
+        .status.rejected {
+
+            color: var(--danger);
+
+            background: var(--soft-red);
+        }
+
+
+        /* =====================================================
+           ACTION BUTTONS
+        ===================================================== */
+
+        .actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+        }
+
+
+        .action {
+
+            width: 35px;
+
+            height: 35px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            transition:
+                opacity .2s,
+                transform .2s;
+        }
+
+
+        .action:hover {
+
+            transform: translateY(-1px);
+
+            opacity: .85;
+        }
+
+
+        .action:disabled {
+
+            opacity: .45;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        .approve {
+
+            background: var(--soft-green);
+
+            color: var(--success);
+        }
+
+
+        .reject {
+
+            background: var(--soft-red);
+
+            color: var(--danger);
+        }
+
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty {
+
+            padding:
+                70px 20px;
+
+            text-align: center;
+
+            color: var(--muted);
+        }
+
+
+        .empty-icon {
+
+            width: 65px;
+
+            height: 65px;
+
+            margin:
+                0 auto 15px;
+
+            border-radius: 15px;
+
+            background: var(--soft-green);
+
+            color: var(--primary);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 27px;
+        }
+
+
+        .empty strong {
+
+            display: block;
+
+            color: var(--text);
+
+            font-size: 16px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .empty span {
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            min-width: 260px;
+
+            max-width: 380px;
+
+            padding:
+                14px 17px;
+
+            border-radius: 9px;
+
+            background: var(--card);
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,.12);
+
+            color: var(--text);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            z-index: 2000;
+
+            opacity: 0;
+
+            transform:
+                translateY(15px);
+
+            pointer-events: none;
+
+            transition:
+                opacity .25s ease,
+                transform .25s ease;
+        }
+
+
+        .toast.show {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+
+        .toast.success {
+
+            border-left:
+                4px solid var(--success);
+        }
+
+
+        .toast.error {
+
+            border-left:
+                4px solid var(--danger);
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                display: none;
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                width: 100%;
+            }
+
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .content {
+
+                padding:
+                    25px 18px;
+            }
+
+
+            .filters {
+
+                flex-direction: column;
+            }
+
+
+            .filter-select {
+
+                width: 100%;
+            }
+
+
+            .page-title {
+
+                font-size: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     CSRF TOKEN
+     
+     This is NOT an HTML form.
+     It only gives JavaScript a reliable CSRF token.
+====================================================== -->
+
+<div style="display:none;">
+    {% csrf_token %}
+</div>
+
+
+
+<!-- =====================================================
+     THEME BUTTON
+====================================================== -->
+
+<button
+    type="button"
+    id="themeToggle"
+    class="theme-toggle"
+    title="Switch to dark mode"
+>
+
+    <span class="sun">
+        ☀
+    </span>
+
+    <span class="moon">
+        ☾
+    </span>
+
+</button>
+
+
+
+<div class="app">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ✚
+            </div>
+
+
+            <div class="brand-name">
+
+                <strong>
+                    MediCare
+                </strong>
+
+                <span>
+                    PHARMACY
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="menu-title">
+            OVERVIEW
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a
+                href="/admin-dashboard/"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ▦
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="/admin-dashboard/#medicines"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ◉
+                </span>
+
+                <span>
+                    Medicines
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="/orders-management/"
+                class="menu-link active"
+            >
+
+                <span class="menu-icon">
+                    ▤
+                </span>
+
+                <span>
+                    Orders
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="/admin-dashboard/#reports"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ◴
+                </span>
+
+                <span>
+                    Reports
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="menu-title">
+            MANAGEMENT
+        </div>
+
+
+        <nav class="menu">
+
+
+            <a
+                href="/add-medicine-page/"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ⊞
+                </span>
+
+                <span>
+                    Add Medicine
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="/admin-dashboard/#medicines"
+                class="menu-link"
+            >
+
+                <span class="menu-icon">
+                    ◇
+                </span>
+
+                <span>
+                    Inventory
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <div class="sidebar-space"></div>
+
+
+
+        <div class="support">
+
+            <div class="support-icon">
+                ♧
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Need assistance?
+                </strong>
+
+                <span>
+                    Contact support
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <a
+            href="/logout/"
+            class="logout"
+        >
+
+            <span>
+                ↪
+            </span>
+
+            <span>
+                Logout
+            </span>
+
+        </a>
+
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN
+    ================================================== -->
+
+    <main class="main">
+
+
+        <header class="topbar">
+        </header>
+
+
+
+        <div class="content">
+
+
+            <!-- BREADCRUMB -->
+
+            <div class="breadcrumb">
+
+                <span>
+                    Dashboard
+                </span>
+
+                <span>
+                    ›
+                </span>
+
+                <strong>
+                    Orders
+                </strong>
+
+            </div>
+
+
+
+            <h1 class="page-title">
+                Order Management
+            </h1>
+
+
+            <p class="page-description">
+                Review customer orders and manage their status.
+            </p>
+
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <div class="stats">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ▤
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Total Orders
+                        </span>
+
+                        <strong>
+                            {{ total_orders|default:"0" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Pending Orders
+                        </span>
+
+                        <strong>
+                            {{ pending_orders|default:"0" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Approved Orders
+                        </span>
+
+                        <strong>
+                            {{ approved_orders|default:"0" }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ORDERS
+            ================================================== -->
+
+            <section class="panel">
+
+
+                <div class="panel-header">
+
+                    <div class="panel-label">
+                        CUSTOMER ORDERS
+                    </div>
+
+
+                    <h2 class="panel-title">
+                        Order Requests
+                    </h2>
+
+
+                    <p class="panel-description">
+                        Approve or reject pending customer orders.
+                    </p>
+
+                </div>
+
+
+
+                <!-- FILTERS -->
+
+                <div class="filters">
+
+
+                    <div class="search">
+
+                        <input
+                            type="text"
+                            id="orderSearch"
+                            placeholder="Search by username or medicine..."
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+
+                    <select
+                        id="orderStatusFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="Approved">
+                            Approved
+                        </option>
+
+                        <option value="Rejected">
+                            Rejected
+                        </option>
+
+                    </select>
+
+
+                </div>
+
+
+
+                <!-- TABLE -->
+
+                <div class="table-wrap">
+
+
+                    <table>
+
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    USER
+                                </th>
+
+                                <th>
+                                    MEDICINE
+                                </th>
+
+                                <th>
+                                    COUNT
+                                </th>
+
+                                <th>
+                                    PRICE
+                                </th>
+
+                                <th>
+                                    TOTAL
+                                </th>
+
+                                <th>
+                                    ORDER DATE
+                                </th>
+
+                                <th>
+                                    STATUS
+                                </th>
+
+                                <th>
+                                    ACTION
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <tbody id="ordersBody">
+
+
+                            {% for order in orders %}
+
+
+                            <tr
+                                class="order-row"
+                                data-user="{{ order.user.username|lower }}"
+                                data-medicine="{{ order.medicine.name|lower }}"
+                                data-status="{{ order.status }}"
+                            >
+
+
+                                <!-- USER -->
+
+                                <td>
+
+                                    <div class="medicine-cell">
+
+
+                                        <div class="medicine-icon">
+                                            ●
+                                        </div>
+
+
+                                        <div>
+
+                                            <strong>
+                                                {{ order.user.username }}
+                                            </strong>
+
+                                            <span>
+                                                Customer
+                                            </span>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </td>
+
+
+
+                                <!-- MEDICINE -->
+
+                                <td>
+                                    {{ order.medicine.name }}
+                                </td>
+
+
+
+                                <!-- COUNT -->
+
+                                <td>
+                                    {{ order.count }}
+                                </td>
+
+
+
+                                <!-- PRICE -->
+
+                                <td class="table-price">
+                                    ₹{{ order.medicine.price }}
+                                </td>
+
+
+
+                                <!-- TOTAL -->
+
+                                <td class="table-price">
+
+                                    ₹{{ order.total_price }}
+
+                                </td>
+
+
+
+                                <!-- DATE -->
+
+                                <td>
+
+                                    {{ order.order_date|date:"d M Y, h:i A" }}
+
+                                </td>
+
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+
+                                    {% if order.status == "Approved" %}
+
+
+                                    <span class="status approved">
+
+                                        <span class="status-dot"></span>
+
+                                        Approved
+
+                                    </span>
+
+
+                                    {% elif order.status == "Rejected" %}
+
+
+                                    <span class="status rejected">
+
+                                        <span class="status-dot"></span>
+
+                                        Rejected
+
+                                    </span>
+
+
+                                    {% else %}
+
+
+                                    <span class="status pending">
+
+                                        <span class="status-dot"></span>
+
+                                        Pending
+
+                                    </span>
+
+
+                                    {% endif %}
+
+
+                                </td>
+
+
+
+                                <!-- ACTION -->
+
+                                <td>
+
+
+                                    {% if order.status == "Pending" %}
+
+
+                                    <div class="actions">
+
+
+                                        <button
+                                            type="button"
+                                            class="action approve update-order"
+                                            data-id="{{ order.id }}"
+                                            data-status="Approved"
+                                            title="Approve Order"
+                                        >
+
+                                            ✓
+
+                                        </button>
+
+
+
+                                        <button
+                                            type="button"
+                                            class="action reject update-order"
+                                            data-id="{{ order.id }}"
+                                            data-status="Rejected"
+                                            title="Reject Order"
+                                        >
+
+                                            ✕
+
+                                        </button>
+
+
+                                    </div>
+
+
+                                    {% else %}
+
+
+                                    <span
+                                        style="
+                                            color:var(--muted);
+                                            font-size:9px;
+                                        "
+                                    >
+                                        Completed
+                                    </span>
+
+
+                                    {% endif %}
+
+
+                                </td>
+
+
+                            </tr>
+
+
+                            {% empty %}
+
+
+                            <tr>
+
+                                <td colspan="8">
+
+
+                                    <div class="empty">
+
+
+                                        <div class="empty-icon">
+                                            ▤
+                                        </div>
+
+
+                                        <strong>
+                                            No customer orders yet
+                                        </strong>
+
+
+                                        <span>
+                                            There are currently no medicine orders to manage.
+                                        </span>
+
+
+                                    </div>
+
+
+                                </td>
+
+                            </tr>
+
+
+                            {% endfor %}
+
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+            </section>
+
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     TOAST
+====================================================== -->
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
+
+
+<script>
+
+    /* =====================================================
+       THEME
+    ===================================================== */
+
+    const themeToggle =
+        document.getElementById("themeToggle");
+
+
+    function applyTheme(theme) {
+
+        if (theme === "dark") {
+
+            document.body.classList.add(
+                "dark-mode"
+            );
+
+
+            themeToggle.title =
+                "Switch to light mode";
+
+        } else {
+
+            document.body.classList.remove(
+                "dark-mode"
+            );
+
+
+            themeToggle.title =
+                "Switch to dark mode";
+
+        }
+
+    }
+
+
+    const savedTheme =
+        localStorage.getItem(
+            "medicare-theme"
+        );
+
+
+    applyTheme(
+        savedTheme === "dark"
+            ? "dark"
+            : "light"
+    );
+
+
+    themeToggle.addEventListener(
+        "click",
+        function () {
+
+            const dark =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
+
+
+            if (dark) {
+
+                applyTheme("light");
+
+                localStorage.setItem(
+                    "medicare-theme",
+                    "light"
+                );
+
+            } else {
+
+                applyTheme("dark");
+
+                localStorage.setItem(
+                    "medicare-theme",
+                    "dark"
+                );
+
+            }
+
+        }
+    );
+
+
+
+    /* =====================================================
+       CSRF TOKEN
+    ===================================================== */
+
+    function getCookie(name) {
+
+        let cookieValue = null;
+
+
+        if (
+            document.cookie &&
+            document.cookie !== ""
+        ) {
+
+            const cookies =
+                document.cookie.split(";");
+
+
+            for (
+                let cookie of cookies
+            ) {
+
+                cookie =
+                    cookie.trim();
+
+
+                if (
+                    cookie.startsWith(
+                        name + "="
+                    )
+                ) {
+
+                    cookieValue =
+                        decodeURIComponent(
+                            cookie.substring(
+                                name.length + 1
+                            )
+                        );
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+
+        return cookieValue;
+
+    }
+
+
+
+    function getCSRFToken() {
+
+        const cookieToken =
+            getCookie("csrftoken");
+
+
+        if (cookieToken) {
+
+            return cookieToken;
+
+        }
+
+
+        const csrfInput =
+            document.querySelector(
+                "[name=csrfmiddlewaretoken]"
+            );
+
+
+        if (csrfInput) {
+
+            return csrfInput.value;
+
+        }
+
+
+        return "";
+
+    }
+
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    let toastTimer = null;
+
+
+    function showToast(
+        message,
+        type = "success"
+    ) {
+
+        clearTimeout(toastTimer);
+
+
+        toast.textContent =
+            message;
+
+
+        toast.className =
+            "toast " +
+            type +
+            " show";
+
+
+        toastTimer =
+            setTimeout(
+                function () {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                2500
+            );
+
+    }
+
+
+
+    /* =====================================================
+       ORDER SEARCH
+    ===================================================== */
+
+    const orderSearch =
+        document.getElementById(
+            "orderSearch"
+        );
+
+
+    const orderStatusFilter =
+        document.getElementById(
+            "orderStatusFilter"
+        );
+
+
+    const orderRows =
+        document.querySelectorAll(
+            ".order-row"
+        );
+
+
+    function filterOrders() {
+
+        const searchValue =
+            orderSearch.value
+                .trim()
+                .toLowerCase();
+
+
+        const statusValue =
+            orderStatusFilter.value;
+
+
+        orderRows.forEach(
+            function (row) {
+
+                const username =
+                    row.dataset.user || "";
+
+
+                const medicine =
+                    row.dataset.medicine || "";
+
+
+                const status =
+                    row.dataset.status || "";
+
+
+                const matchesSearch =
+                    username.includes(
+                        searchValue
+                    ) ||
+                    medicine.includes(
+                        searchValue
+                    );
+
+
+                const matchesStatus =
+                    statusValue === "all" ||
+                    status === statusValue;
+
+
+                row.style.display =
+                    matchesSearch &&
+                    matchesStatus
+                        ? ""
+                        : "none";
+
+            }
+        );
+
+    }
+
+
+    if (orderSearch) {
+
+        orderSearch.addEventListener(
+            "input",
+            filterOrders
+        );
+
+    }
+
+
+    if (orderStatusFilter) {
+
+        orderStatusFilter.addEventListener(
+            "change",
+            filterOrders
+        );
+
+    }
+
+
+
+    /* =====================================================
+       UPDATE ORDER STATUS
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".update-order"
+        )
+        .forEach(
+            function (button) {
+
+
+                button.addEventListener(
+                    "click",
+                    async function () {
+
+
+                        const orderId =
+                            this.dataset.id;
+
+
+                        const newStatus =
+                            this.dataset.status;
+
+
+                        if (!orderId) {
+
+                            showToast(
+                                "Order ID is missing.",
+                                "error"
+                            );
+
+                            return;
+
+                        }
+
+
+                        const confirmation =
+                            newStatus === "Approved"
+                                ? "Are you sure you want to approve this order?"
+                                : "Are you sure you want to reject this order?";
+
+
+                        if (
+                            !window.confirm(
+                                confirmation
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+
+
+                        /* SAVE ORIGINAL TEXT */
+
+                        const originalText =
+                            this.textContent;
+
+
+                        const buttons =
+                            this
+                                .closest(".actions")
+                                .querySelectorAll(
+                                    "button"
+                                );
+
+
+                        buttons.forEach(
+                            function (item) {
+
+                                item.disabled =
+                                    true;
+
+                            }
+                        );
+
+
+                        this.textContent =
+                            "…";
+
+
+
+                        try {
+
+
+                            const csrfToken =
+                                getCSRFToken();
+
+
+                            if (!csrfToken) {
+
+                                throw new Error(
+                                    "CSRF token was not found."
+                                );
+
+                            }
+
+
+
+                            const response =
+                                await fetch(
+                                    `/update-order-status/${orderId}/`,
+                                    {
+
+                                        method:
+                                            "POST",
+
+                                        credentials:
+                                            "same-origin",
+
+                                        headers: {
+
+                                            "Content-Type":
+                                                "application/x-www-form-urlencoded; charset=UTF-8",
+
+                                            "X-CSRFToken":
+                                                csrfToken,
+
+                                            "X-Requested-With":
+                                                "XMLHttpRequest"
+
+                                        },
+
+                                        body:
+                                            new URLSearchParams({
+
+                                                status:
+                                                    newStatus
+
+                                            })
+
+                                    }
+                                );
+
+
+
+                            /* SERVER ERROR */
+
+                            if (!response.ok) {
+
+                                let errorMessage =
+                                    `Server error (${response.status}).`;
+
+
+                                try {
+
+                                    const errorData =
+                                        await response.json();
+
+
+                                    if (
+                                        errorData.message
+                                    ) {
+
+                                        errorMessage =
+                                            errorData.message;
+
+                                    }
+
+                                } catch (ignore) {
+                                }
+
+
+                                throw new Error(
+                                    errorMessage
+                                );
+
+                            }
+
+
+
+                            /* READ JSON */
+
+                            const data =
+                                await response.json();
+
+
+
+                            if (data.success) {
+
+
+                                showToast(
+                                    newStatus === "Approved"
+                                        ? "Order approved successfully."
+                                        : "Order rejected successfully.",
+                                    "success"
+                                );
+
+
+                                setTimeout(
+                                    function () {
+
+                                        window.location.reload();
+
+                                    },
+                                    700
+                                );
+
+
+                            } else {
+
+
+                                showToast(
+                                    data.message ||
+                                    "Unable to update order.",
+                                    "error"
+                                );
+
+
+                                buttons.forEach(
+                                    function (item) {
+
+                                        item.disabled =
+                                            false;
+
+                                    }
+                                );
+
+
+                                this.textContent =
+                                    originalText;
+
+                            }
+
+
+                        } catch (error) {
+
+
+                            console.error(
+                                "Order status error:",
+                                error
+                            );
+
+
+                            showToast(
+                                error.message ||
+                                "Something went wrong while updating the order.",
+                                "error"
+                            );
+
+
+                            buttons.forEach(
+                                function (item) {
+
+                                    item.disabled =
+                                        false;
+
+                                }
+                            );
+
+
+                            this.textContent =
+                                originalText;
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+</script>
+
+
+</body>
+
+</html>
